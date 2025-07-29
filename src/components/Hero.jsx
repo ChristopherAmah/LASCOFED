@@ -84,7 +84,7 @@ const Hero = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="absolute inset-0 flex flex-col justify-center md:px-44 z-10"
+                className="absolute inset-0 flex flex-col justify-center px-14 md:px-44 z-10"
                 >
                 <motion.h2
                     variants={childVariants}
