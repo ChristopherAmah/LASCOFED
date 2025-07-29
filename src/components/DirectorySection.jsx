@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
+
+const ITEMS_PER_PAGE = 6;
 
 const data = [
   {
@@ -44,9 +46,171 @@ const data = [
     phone: "08033742386",
     email: "tunjiotunla@gmail.com",
   },
+  {
+    name: "Mr. Ogungbe Elijah Sonayon",
+    union: "Badagry",
+    position: "MCU President",
+    phone: "08079671250",
+    email: "elijah.ogungbe@gmail.com",
+  },
+  {
+    name: "Alhaji Shabi Ismail",
+    union: "Epe",
+    position: "MCU President",
+    phone: "08062188219",
+    email: "honismailshabi@gmail.com",
+  },
+  {
+    name: "Mr. Aderoku Akinpelu Goriola",
+    union: "Eti-Osa",
+    position: "MCU President",
+    phone: "08096217381",
+    email: "gorialan2014@gmail.com",
+  },
+  {
+    name: "Mr. Abiodun Kehinde Olu",
+    union: "Ibeju Lekki",
+    position: "MCU President",
+    phone: "08037265636",
+    email: "kingkennyabby@yahoo.com",
+  },
+  {
+    name: "Mr. Abolaji Adedayo Titus",
+    union: "Ifako/Ijaiye",
+    position: "MCU President",
+    phone: "08056282554",
+    email: "abolajiwater@gmail.com",
+  },
+  {
+    name: "Mr. Adekunle Gbadamosi",
+    union: "Igando/Ikotun",
+    position: "MCU President",
+    phone: "08058440017",
+    email: "adekunle.gbadamosi@yahoo.com",
+  },
+  {
+    name: "Mr. Lanre Ariyo",
+    union: "Ikeja",
+    position: "MCU President",
+    phone: "08056010530",
+    email: "laariyo2002@yahoo.com",
+  },
+  {
+    name: "Eld. Adeshina Ayomide Mathew",
+    union: "Ikd. South",
+    position: "MCU President",
+    phone: "08023014243",
+    email: "ayomideadesina56@gmail.com",
+  },
+  {
+    name: "Mr. Sunday C. Nwankwo",
+    union: "Ikd. North",
+    position: "MCU President",
+    phone: "08064332139",
+    email: "sundaynwankwo0@gmail.com",
+  },
+  {
+    name: "Mr. Michael Avwioroko",
+    union: "Kosofe",
+    position: "MCU President",
+    phone: "09036294868",
+    email: "avwioroko@gmail.com",
+  },
+  {
+    name: "Mr. Adelaja Shorunke",
+    union: "L/Island",
+    position: "MCU President",
+    phone: "07034138191",
+    email: "",
+  },
+  {
+    name: "Mr. Hakeem Adewuyi",
+    union: "L/Mainland",
+    position: "MCU President",
+    phone: "08033208935",
+    email: "yadewuyi@unilag.edu.ng",
+  },
+  {
+    name: "Mr. Garuba Liadi",
+    union: "Mushin",
+    position: "MCU President",
+    phone: "08052797821",
+    email: "liadi.garuba@ng.nestle.com",
+  },
+  {
+    name: "Mr. Adebeso Adekunle Ganiu",
+    union: "Ojo",
+    position: "MCU President",
+    phone: "08036044340",
+    email: "",
+  },
+  {
+    name: "Elder Oluwafemi Ariyo",
+    union: "Onigbongbo",
+    position: "MCU President",
+    phone: "08038055444",
+    email: "ariyofemi2@gmail.com",
+  },
+  {
+    name: "Mr. Gbadebo T. Olayiwola",
+    union: "Oshodi",
+    position: "MCU President",
+    phone: "08161207133",
+    email: "olayiwola12367@gmail.com",
+  },
+  {
+    name: "Mr. Jamiu Lawal",
+    union: "Shomolu",
+    position: "MCU President",
+    phone: "08028941304",
+    email: "jamiu.lawal83@yahoo.com",
+  },
+  {
+    name: "Mr. Oyebola Michael",
+    union: "Surulere",
+    position: "MCU President",
+    phone: "08033450603",
+    email: "Michkay2004@gmail.com",
+  },
+  {
+    name: "Mr. Olufemi Obakoya",
+    union: "LASCOFIS",
+    position: "Asso. President",
+    phone: "09034494483",
+    email: "chalce.obk@gmail.com",
+  },
+  {
+    name: "Mr. Wasiu Ake",
+    union: "Artisans",
+    position: "Asso. President",
+    phone: "08038026701",
+    email: "Sulaymanwasiu361@gmail.com",
+  },
+  {
+    name: "Princess Olukokun A. Olufunmilola",
+    union: "Women in Coop.",
+    position: "Asso. President",
+    phone: "08062101625",
+    email: "adeyinkafunmilola4@gmail.com",
+  },
 ];
 
 const DirectorySection = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+
+  const paginatedData = data.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <section className="bg-red-50 py-20 px-4 md:px-16">
       {/* Header */}
@@ -59,7 +223,6 @@ const DirectorySection = () => {
         </h3>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Explore our network of 24 Multipurpose Cooperative Unions across Lagos State.
-          Each union plays a vital role in representing and serving its members.
         </p>
       </div>
 
@@ -87,12 +250,14 @@ const DirectorySection = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((person, index) => (
+            {paginatedData.map((person, index) => (
               <tr
                 key={index}
-                className={index % 2 === 0 ? "bg-white" : "bg-red-50"}
+                className={(index % 2 === 0 ? "bg-white" : "bg-red-50")}
               >
-                <td className="px-6 py-4">{index + 1}</td>
+                <td className="px-6 py-4">
+                  {(currentPage - 1) * ITEMS_PER_PAGE + index + 1}
+                </td>
                 <td className="px-6 py-4">{person.name}</td>
                 <td className="px-6 py-4">{person.union}</td>
                 <td className="px-6 py-4">{person.position}</td>
@@ -104,23 +269,36 @@ const DirectorySection = () => {
         </table>
       </div>
 
-      {/* Pagination */}
+      {/* Pagination Controls */}
       <div className="mt-10 flex justify-center items-center gap-2 text-gray-700 text-sm">
-        <button className="px-2 py-1 text-gray-400 cursor-not-allowed">&lt;</button>
-        <button className="w-8 h-8 rounded-full bg-red-500 text-white font-semibold">
-          1
+        <button
+          className="px-3 py-1 text-gray-600 rounded hover:bg-gray-200 disabled:opacity-30"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          &lt;
         </button>
-        <button className="w-8 h-8 rounded-full hover:bg-red-100">2</button>
-        <button className="w-8 h-8 rounded-full hover:bg-red-100">3</button>
-        <span className="px-2">...</span>
-        <button className="w-8 h-8 rounded-full hover:bg-red-100">26</button>
-        <button className="px-2 py-1 text-gray-700">&gt;</button>
-      </div>
 
-      {/* Load More Button */}
-      <div className="mt-6 flex justify-center">
-        <button className="bg-red-500 text-white px-6 py-2 rounded-full font-medium hover:bg-red-600 transition">
-          Load More
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            className={`w-8 h-8 rounded-full ${
+              currentPage === i + 1
+                ? "bg-red-500 text-white font-semibold"
+                : "hover:bg-red-100"
+            }`}
+            onClick={() => handlePageChange(i + 1)}
+          >
+            {i + 1}
+          </button>
+        ))}
+
+        <button
+          className="px-3 py-1 text-gray-600 rounded hover:bg-gray-200 disabled:opacity-30"
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          &gt;
         </button>
       </div>
     </section>
