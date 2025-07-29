@@ -1,39 +1,41 @@
 import React from 'react';
-import {
-  FaTwitter,
-  FaFacebookF,
-  FaGooglePlusG,
-  FaPinterestP,
-  FaLinkedinIn,
-  FaInstagram,
-} from 'react-icons/fa';
+import { FaPhone, FaMapMarkerAlt, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaClock } from 'react-icons/fa';
 
-const Topbar = () => {
+const TopBar = () => {
   return (
-    <section className="bg-white/90 backdrop-blur-sm shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col md:flex-row items-center justify-between relative">
-
-        {/* Left Section: Social Icons */}
-        <div className="flex flex-wrap justify-center md:justify-start space-x-4 text-sm text-orange-500 mb-2 md:mb-0 z-10">
-          <a href="#" className="hover:text-orange-600"><FaTwitter /></a>
-          <a href="#" className="hover:text-orange-600"><FaFacebookF /></a>
-          <a href="#" className="hover:text-orange-600"><FaGooglePlusG /></a>
-          <a href="#" className="hover:text-orange-600"><FaPinterestP /></a>
-          <a href="#" className="hover:text-orange-600"><FaLinkedinIn /></a>
-          <a href="#" className="hover:text-orange-600"><FaInstagram /></a>
+    <div className="bg-black text-white text-sm px-4 md:px-10 py-2 flex flex-col md:flex-row justify-between items-center">
+      {/* Left Section */}
+      <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="flex items-center gap-1">
+          <FaClock />
+          <span>Monday - Friday 9 AM - 5 PM</span>
         </div>
-
-        {/* Right Section */}
-        <div className="relative z-10 flex space-x-4 text-white">
-          <button className="py-1 px-3 bg-orange-500 rounded hover:bg-orange-600 transition">REGISTER</button>
-          <button className="py-1 px-3 bg-orange-500 rounded hover:bg-orange-600 transition">LOG IN</button>
+        <div className="flex items-center gap-1">
+          <FaPhone />
+          <span>+234 802311726</span>
         </div>
-
-        {/* Background Orange Slant - Hidden on small screens */}
-        <div className="hidden md:block absolute top-0 right-0 w-1/2 h-full bg-orange-500 clip-path-slant z-0" />
+        <div className="flex items-center gap-1">
+          <FaMapMarkerAlt />
+          <span>Plot 13, Isaacstan Close, Off Wempco Road, Ojodu, Ogba, Lagos, Nigeria</span>
+        </div>
       </div>
-    </section>
+
+      {/* Right Section */}
+      <div className="flex items-center gap-4 mt-2 md:mt-0">
+        <div className="flex items-center gap-3">
+          <a href="#" className="hover:text-blue-500"><FaFacebookF /></a>
+          <a href="#" className="hover:text-blue-400"><FaTwitter /></a>
+          <a href="#" className="hover:text-pink-400"><FaInstagram /></a>
+          <a href="#" className="hover:text-blue-700"><FaLinkedinIn /></a>
+        </div>
+        <div className="flex items-center gap-2 ml-2">
+          <a href="#" className="hover:underline">EN</a>
+          <a href="#" className="hover:underline">ES</a>
+          <a href="#" className="hover:underline">FR</a>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Topbar;
+export default TopBar;

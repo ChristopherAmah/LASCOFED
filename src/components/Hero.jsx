@@ -1,30 +1,40 @@
-import React, { useState } from "react";
-import library from '../assets/library.jpg';
-import book from '../assets/books.jpg';
-
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { motion } from "framer-motion";
+import { FaPhoneAlt } from "react-icons/fa";
+import { BiSolidQuoteAltRight } from "react-icons/bi";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import building from "../assets/building.png"; // Replace with your actual background
 
 const slides = [
   {
-    image: library,
-    title: "Explore the World of Books",
-    subtitle: "Discover stories that inspire and transform",
-    buttonText: "Shop Now",
+    image: building,
+    title: "Welcome To Lagos State Cooperative Federation.",
+    subtitle:
+      "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
+    phone: "+2348023117726",
+    buttonText: "Active Button",
   },
   {
-    image: book,
-    title: "Read, Learn, Grow",
-    subtitle: "Fuel your mind with endless knowledge",
-    buttonText: "Browse Collection",
+    image: building,
+    title: "Welcome To Lagos State Cooperative Federation.",
+    subtitle:
+      "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
+    phone: "+2348023117726",
+    buttonText: "Active Button",
   },
   {
-    image: library,
-    title: "Build Your Library",
-    subtitle: "Curate your personal collection today",
-    buttonText: "Start Reading",
+    image: building,
+    title: "Welcome To Lagos State Cooperative Federation.",
+    subtitle:
+      "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
+    phone: "+2348023117726",
+    buttonText: "Active Button",
   },
 ];
 
@@ -40,66 +50,99 @@ const containerVariants = {
 };
 
 const childVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 };
 
 const Hero = () => {
-  const [animationKey, setAnimationKey] = useState(0);
-
   return (
-    <div className="carousel relative h-[70vh]">
+    <div className="relative">
       <Swiper
-        modules={[Autoplay]}
+        modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop={true}
-        onSlideChange={() => setAnimationKey((prev) => prev + 1)}
-        className="w-full h-full"
-      >
+        pagination={{ clickable: true }}
+        navigation={true}
+        className="w-full h-[80vh] md:h-[90vh] relative"
+        >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
+            <SwiperSlide key={index}>
             <div className="relative w-full h-full">
-              {/* Image */}
-              <img
+                <img
                 src={slide.image}
                 alt={slide.title}
                 className="w-full h-full object-cover"
-              />
+                />
+                {/* Overlay */}
+                {/* <div className="absolute inset-0 bg-black/50"></div> */}
+                <div className="absolute inset-0 z-10">
+                    <div className="h-full w-full bg-gradient-to-r from-black/70 via-black/50 to-transparent bg-gradient-to-b from-black/60 via-black/30 to-transparent"></div>
+                </div>
 
-              {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition duration-500"></div>
-
-              {/* Animated Text */}
-              <motion.div
-                key={animationKey}
+                {/* Content */}
+                <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4"
-              >
-                <motion.h2
-                  variants={childVariants}
-                  className="text-white text-3xl md:text-5xl font-bold mb-3"
+                className="absolute inset-0 flex flex-col justify-center md:px-44 z-10"
                 >
-                  {slide.title}
+                <motion.h2
+                    variants={childVariants}
+                    className="text-white text-4xl md:text-6xl font-bold leading-tight mb-4"
+                >
+                    {slide.title}
                 </motion.h2>
                 <motion.p
-                  variants={childVariants}
-                  className="text-white text-base md:text-lg mb-5 max-w-xl"
+                    variants={childVariants}
+                    className="text-white text-lg md:text-xl mb-6 max-w-3xl"
                 >
-                  {slide.subtitle}
+                    {slide.subtitle}
                 </motion.p>
-                <motion.button
-                  variants={childVariants}
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
+                <motion.div
+                    variants={childVariants}
+                    className="flex flex-col sm:flex-row items-center gap-4 space-x-5"
                 >
-                  {slide.buttonText}
-                </motion.button>
-              </motion.div>
+                    <button className="bg-white text-red-500 px-10 py-3 rounded-full font-semibold shadow cursor-pointer">
+                    {slide.buttonText}
+                    </button>
+                    <div className="flex items-center text-white gap-2 text-lg">
+                    <FaPhoneAlt className="text-white" />
+                    <span>{slide.phone}</span>
+                    </div>
+                </motion.div>
+                </motion.div>
             </div>
-          </SwiperSlide>
+            </SwiperSlide>
         ))}
       </Swiper>
+
+
+      {/* Quote Section */}
+      <div className="text-white px-6 md:px-12 py-10 relative overflow-hidden" style={{background: '#FABBBD'}}>
+
+        <p className="text-lg md:text-xl italic font-light max-w-4xl mx-auto relative z-10 px-10">
+          “<span className="font-semibold">Cooperatives</span> are a reminder to the international community that it is
+          possible to pursue both economic viability and social responsibility.”
+        </p>
+        <p className="mt-4 text-right pr-4 text-sm md:text-base italic relative z-10">
+          — Ban Ki-moon, Former UN Secretary-General
+        </p>
+        {/* Quotation Icon */}
+        <div className="absolute text-6xl right-6 bottom-16 text-8xl font-bold opacity-30 z-10"><BiSolidQuoteAltRight /></div>
+        <div className="hidden md:block absolute top-0 right-0 w-3/4 h-full clip-path-slant z-0"
+        style={{background: '#ED1B24'}} />
+
+      </div>
+
+
+      <style>
+        {
+            /* clip path for slant gradient */
+            `.clip-path-slant {
+            clip-path:polygon(0% 0%, 100% 0%, 100% 100%, 20% 100%)
+            }`
+        }
+      </style>
     </div>
   );
 };
