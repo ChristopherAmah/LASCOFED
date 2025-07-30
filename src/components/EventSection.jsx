@@ -1,6 +1,6 @@
 // src/components/EventSlider.jsx
-import React, { useState } from 'react';
-import building from '../assets/building.png'
+import React, { useState, useEffect } from 'react';
+import building from '../assets/building.png'; // Make sure this path is correct
 
 const events = [
   {
@@ -8,7 +8,7 @@ const events = [
     name: 'Annual General Meeting',
     date: '24 October, 2024',
     location: 'Lagos',
-    image: building, // Replace with actual image paths
+    image: building, // Changed to building
     category: 'Trainings',
   },
   {
@@ -16,7 +16,7 @@ const events = [
     name: 'Community Outreach Program',
     date: '15 November, 2024',
     location: 'Abuja',
-    image: building,
+    image: building, // Changed to building
     category: 'Trainings',
   },
   {
@@ -24,7 +24,7 @@ const events = [
     name: 'Leadership Workshop',
     date: '01 December, 2024',
     location: 'Port Harcourt',
-    image: building,
+    image: building, // Changed to building
     category: 'Tours',
   },
   {
@@ -32,7 +32,7 @@ const events = [
     name: 'Product Launch Event',
     date: '10 January, 2025',
     location: 'Kano',
-    image: building,
+    image: building, // Changed to building
     category: 'Tours',
   },
   {
@@ -40,18 +40,30 @@ const events = [
     name: 'Innovation Summit',
     date: '28 February, 2025',
     location: 'Enugu',
-    image: building,
+    image: building, // Changed to building
     category: 'Seminars',
   },
 ];
 
 const EventSection = () => {
-  const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [filteredEvents, setFilteredEvents] = useState(events);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
-  const filteredEvents = activeCategory === 'All'
-    ? events
-    : events.filter(event => event.category === activeCategory);
+  useEffect(() => {
+    const initialFilteredEvents = activeCategory === 'All'
+      ? events
+      : events.filter(event => event.category === activeCategory);
+
+    setFilteredEvents(initialFilteredEvents);
+
+    if (initialFilteredEvents.length > 0) {
+      const middleIndex = Math.floor(initialFilteredEvents.length / 2);
+      setCurrentEventIndex(middleIndex);
+    } else {
+      setCurrentEventIndex(0);
+    }
+  }, [activeCategory]);
 
   const totalEvents = filteredEvents.length;
 
@@ -64,7 +76,16 @@ const EventSection = () => {
   };
 
   const getCardTransform = (index) => {
-    const offset = index - currentEventIndex;
+    let displayIndex = index;
+    if (totalEvents > 0) {
+        if (index - currentEventIndex > totalEvents / 2) {
+            displayIndex -= totalEvents;
+        } else if (currentEventIndex - index > totalEvents / 2) {
+            displayIndex += totalEvents;
+        }
+    }
+
+    const offset = displayIndex - currentEventIndex;
     let rotation = 0;
     let translateX = 0;
     let zIndex = 0;
@@ -72,52 +93,47 @@ const EventSection = () => {
     let scale = 1;
 
     if (offset === 0) {
-      // Active card
-      translateX = 0;
-      rotation = 0;
+      translateX = '0%';
+      rotation = '0deg';
       zIndex = 10;
       scale = 1;
+      opacity = 1;
     } else if (offset === 1) {
-      // Card immediately to the right
-      translateX = '40%'; // Adjust as needed
-      rotation = '5deg'; // Slight rotation
+      translateX = '40%';
+      rotation = '5deg';
       zIndex = 9;
       opacity = 0.8;
       scale = 0.95;
     } else if (offset === 2) {
-      // Second card to the right
-      translateX = '80%'; // Adjust as needed
-      rotation = '10deg'; // More rotation
+      translateX = '80%';
+      rotation = '10deg';
       zIndex = 8;
       opacity = 0.6;
       scale = 0.9;
     } else if (offset === -1) {
-      // Card immediately to the left
-      translateX = '-40%'; // Adjust as needed
-      rotation = '-5deg'; // Slight rotation
+      translateX = '-40%';
+      rotation = '-5deg';
       zIndex = 9;
       opacity = 0.8;
       scale = 0.95;
     } else if (offset === -2) {
-      // Second card to the left
-      translateX = '-80%'; // Adjust as needed
-      rotation = '-10deg'; // More rotation
+      translateX = '-80%';
+      rotation = '-10deg';
       zIndex = 8;
       opacity = 0.6;
       scale = 0.9;
     } else {
-      // Cards further away (hidden or almost hidden)
       opacity = 0;
       zIndex = 1;
       scale = 0.8;
-      translateX = offset > 0 ? '100%' : '-100%'; // Push them out
+      translateX = offset > 0 ? '120%' : '-120%';
     }
 
     return {
       transform: `translateX(${translateX}) rotate(${rotation}) scale(${scale})`,
       zIndex: zIndex,
       opacity: opacity,
-      transition: 'all 0.5s ease-in-out', // Smooth transitions
+      transition: 'all 0.5s ease-in-out',
     };
   };
 
@@ -131,7 +147,7 @@ const EventSection = () => {
             Stay Connected with LASCOFED
           </h2>
           <p className="mt-4 text-gray-600 max-w-3xl mx-auto">
-             Keep up-to-date with the latest news, events, and insights from the Lagos State Cooperative Federation.
+            Keep up-to-date with the latest news, events, and insights from the Lagos State Cooperative Federation.
           </p>
         </div>
 
@@ -142,7 +158,6 @@ const EventSection = () => {
               key={category}
               onClick={() => {
                 setActiveCategory(category);
-                setCurrentEventIndex(0); // Reset index when category changes
               }}
               className={`px-6 py-2 rounded-full font-medium text-sm transition-colors duration-300
                 ${activeCategory === category

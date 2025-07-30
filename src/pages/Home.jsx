@@ -6,6 +6,7 @@ import DirectorySection from '../components/DirectorySection'
 import EventSection from '../components/EventSection'
 import TestimonialSection from '../components/TestimonialSection'
 import SubscribeSection from '../components/SusbscribeSection'
+import EmpowermentSection from '../components/EmpowermentSection'
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <Hero />
       <Numbers />
       <OurServicesSection />
+      <EmpowermentSection />
       <DirectorySection />
       <EventSection />
       <TestimonialSection />
