@@ -46,3 +46,12 @@
   background-color: white !important;
   opacity: 1;
 }
+
+/* in your global CSS */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
