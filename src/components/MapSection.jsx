@@ -3,7 +3,7 @@ import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock } from 'react-icons/fa'
 
 const MapSection = () => {
   return (
-    <section className="max-w-7xl mx-auto px-20 py-20 grid grid-cols-1 md:grid-cols-2 gap-10">
+    <section className="max-w-7xl mx-auto px-10 md:px-20 py-20 grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* Left: Contact Form */}
       <form className="space-y-5">
         <div>
