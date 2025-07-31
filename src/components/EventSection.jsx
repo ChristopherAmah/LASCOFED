@@ -165,24 +165,26 @@ const EventSection = () => {
         </div>
 
         {/* Category Filter Buttons */}
-        <div className="flex justify-center space-x-4 mb-12">
-          {['All', 'Seminars', 'Trainings', 'Tours'].map((category) => (
-            <button
-              key={category}
-              onClick={() => {
-                setActiveCategory(category);
-                // useEffect hook handles resetting currentEventIndex to the middle of the new filtered list
-              }}
-              className={`px-6 py-2 rounded-full font-medium text-sm transition-colors duration-300
-                ${activeCategory === category
-                  ? 'bg-red-600 text-white shadow-md' // Active category button style
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200' // Inactive category button style
-                }`}
-            >
-              {category}
-            </button>
-          ))}
+        <div className="flex justify-center mb-12">
+          <div className="flex overflow-x-auto space-x-4 px-4 scrollbar-hide whitespace-nowrap">
+            {['All', 'Seminars', 'Trainings', 'Tours'].map((category) => (
+              <button
+                key={category}
+                onClick={() => {
+                  setActiveCategory(category);
+                }}
+                className={`px-6 py-2 rounded-full font-medium text-sm transition-colors duration-300
+                  ${activeCategory === category
+                    ? 'bg-red-600 text-white shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
+
 
         {/* Slider Section Container */}
         <div className="relative w-full max-w-5xl mx-auto h-[450px] overflow-hidden flex items-center justify-center">
