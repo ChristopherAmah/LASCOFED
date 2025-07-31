@@ -165,7 +165,7 @@ const EventSection = () => {
         </div>
 
         {/* Category Filter Buttons */}
-        <div className="flex justify-center space-x-4 mb-12">
+        <div className="flex justify-center space-x-4 mb-12 px-4">
           {['All', 'Seminars', 'Trainings', 'Tours'].map((category) => (
             <button
               key={category}

@@ -36,7 +36,7 @@ const EmpowermentSection = () => {
           {/* Added flexbox to the right column, with column direction and reverse on large screens */}
           <div className="flex flex-col lg:flex-col-reverse">
             {/* Image Container */}
-            <div className="rounded-lg overflow-hidden shadow-lg">
+            <div className="rounded-lg overflow-hidden shadow-lg mb-8">
               <img
                 src={building} // Ensure you have a different image for the right column for clarity
                 alt="People at an event related to cooperative development"
