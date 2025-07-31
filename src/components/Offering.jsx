@@ -1,7 +1,7 @@
 import { section } from 'framer-motion/client';
 import React from 'react';
 
-const SubscribeSection = () => {
+const Offering = () => {
   return (
     <section className="relative py-20 px-4 md:px-8 bg-red-50 font-sans overflow-hidden">
         <div className='px-20'>
@@ -32,10 +32,10 @@ const SubscribeSection = () => {
       {/* Content Container */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <h2 className="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
-          Subscribe to CoopLight NewsLetter!
+          Let Us Send You Offering
         </h2>
         <p className="text-gray-600 mb-10">
-          Stay Informed: Subscribe to Our Newsletter for Updates & Insights
+          Let's talk with us and more explore how we doing our works.
         </p>
 
         {/* Email Input and Button */}
@@ -44,11 +44,11 @@ const SubscribeSection = () => {
             <input
             type="email"
             placeholder="Your Email"
-            className="w-full pr-24 pl-4 py-3 rounded-full border border-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-700 bg-white"
+            className="w-full pr-24 pl-4 py-3 rounded-full border border-red-50 focus:outline-none focus:ring-2 focus:ring-red-500text-gray-700 bg-white"
             />
             <button
             type="submit"
-            className="absolute right-1 top-1/2 -translate-y-1/2 px-5 py-3 bg-red-600 text-white font-semibold rounded-full  hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm cursor-pointer"
+            className="absolute right-1 top-1/2 -translate-y-1/2 px-5 py-3 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm cursor-pointer"
             >
             Send
             </button>
@@ -61,4 +61,4 @@ const SubscribeSection = () => {
   );
 };
 
-export default SubscribeSection;
+export default Offering;
