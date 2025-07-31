@@ -9,7 +9,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import building from "../assets/building.png"; // Replace with your actual background
+import building from "../assets/building.png"; 
+import slide2 from "../assets/slide2.jpg"; 
 
 const slides = [
   {
@@ -21,21 +22,21 @@ const slides = [
     buttonText: "Active Button",
   },
   {
-    image: building,
+    image: slide2,
     title: "Welcome To Lagos State Cooperative Federation.",
     subtitle:
       "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
     phone: "+2348023117726",
     buttonText: "Active Button",
   },
-  {
-    image: building,
-    title: "Welcome To Lagos State Cooperative Federation.",
-    subtitle:
-      "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
-    phone: "+2348023117726",
-    buttonText: "Active Button",
-  },
+  // {
+  //   image: building,
+  //   title: "Welcome To Lagos State Cooperative Federation.",
+  //   subtitle:
+  //     "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
+  //   phone: "+2348023117726",
+  //   buttonText: "Active Button",
+  // },
 ];
 
 const containerVariants = {
@@ -89,6 +90,7 @@ const Hero = () => {
                 <motion.h2
                     variants={childVariants}
                     className="text-white text-4xl md:text-6xl font-bold leading-tight mb-4"
+                    // style={{fontSize:'80px'}}
                 >
                     {slide.title}
                 </motion.h2>
@@ -117,22 +119,62 @@ const Hero = () => {
       </Swiper>
 
 
-      {/* Quote Section */}
-      <div className="text-white px-6 md:px-12 py-10 relative overflow-hidden" style={{background: '#FABBBD'}}>
+      {/* Auto-playing Quote Swiper */}
+      <Swiper
+        modules={[Autoplay, Pagination]}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        loop={true}
+        pagination={{ clickable: true }}
+        allowTouchMove={false}
+        draggable={false}
+        className="bg-[#FABBBD] text-white px-6 md:px-12 py-10 relative overflow-hidden"
+      >
+        <SwiperSlide>
+          <div className="relative z-10 px-10 max-w-4xl mx-auto py-10">
+            <p className="text-lg md:text-xl italic font-light">
+              “<span className="font-semibold">Cooperatives</span> are a reminder to the international community that it is
+              possible to pursue both economic viability and social responsibility.”
+            </p>
+            <p className="mt-4 text-right text-sm md:text-base italic">
+              — Ban Ki-moon, Former UN Secretary-General
+            </p>
+          </div>
+        </SwiperSlide>
 
-        <p className="text-lg md:text-xl italic font-light max-w-4xl mx-auto relative z-10 px-10">
-          “<span className="font-semibold">Cooperatives</span> are a reminder to the international community that it is
-          possible to pursue both economic viability and social responsibility.”
-        </p>
-        <p className="mt-4 text-right pr-4 text-sm md:text-base italic relative z-10">
-          — Ban Ki-moon, Former UN Secretary-General
-        </p>
+        <SwiperSlide>
+          <div className="relative z-10 px-10 max-w-4xl mx-auto py-10">
+            <p className="text-lg md:text-xl italic font-light">
+              “<span className="font-semibold">Cooperatives</span> empower communities, foster shared prosperity, and uphold democratic values in business.”
+            </p>
+            <p className="mt-4 text-right text-sm md:text-base italic">
+              — International Cooperative Alliance
+            </p>
+          </div>
+        </SwiperSlide>
+
+        {/* Add more SwiperSlide quotes as needed */}
+
         {/* Quotation Icon */}
-        <div className="absolute text-6xl right-6 bottom-16 text-8xl font-bold opacity-30 z-10"><BiSolidQuoteAltRight /></div>
-        <div className="hidden md:block absolute top-0 right-0 w-3/4 h-full clip-path-slant z-0"
-        style={{background: '#ED1B24'}} />
+        <div className="absolute text-6xl right-6 bottom-16 text-8xl font-bold opacity-30 z-10">
+          <BiSolidQuoteAltRight />
+        </div>
 
-      </div>
+        {/* Slanted Red Overlay (for large screens only) */}
+        <div
+          className="hidden md:block absolute top-0 right-0 w-3/4 h-full clip-path-slant z-0"
+          style={{ background: "#ED1B24" }}
+        />
+
+        {/* Custom Clip Path Style */}
+        <style>
+          {`
+            .clip-path-slant {
+              clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20% 100%);
+            }
+          `}
+        </style>
+      </Swiper>
+
 
 
       <style>

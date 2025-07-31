@@ -18,7 +18,7 @@ const features = [
 const Numbers = () => {
   return (
     <>
-    <section className='max-w-7xl mx-auto px-4 py-5 mt-12'>
+    <section className='max-w-7xl mx-auto px-4 py-20'>
         {/* heading texts */}
         <div className='text-center mb-12'>
             <p className='font-semibold' style={{color: '#ED1B24'}}>OUR NUMBERS</p>

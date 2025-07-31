@@ -151,7 +151,7 @@ const EventSection = () => {
   };
 
   return (
-    <section className="py-16 bg-white font-sans">
+    <section className="py-20 bg-white font-sans">
       <div className="container mx-auto px-4">
         {/* Header Section */}
         <div className="text-center mb-12">

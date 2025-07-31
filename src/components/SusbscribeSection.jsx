@@ -40,7 +40,7 @@ const SubscribeSection = () => {
 
         {/* Email Input and Button */}
         <div className="flex justify-center items-center">
-        <div className="relative w-full md:w-3/5 lg:w-2/5">
+        <div className="relative w-full md:w-3/5 lg:w-3/5">
             <input
             type="email"
             placeholder="Your Email"
@@ -48,7 +48,7 @@ const SubscribeSection = () => {
             />
             <button
             type="submit"
-            className="absolute right-1 top-1/2 -translate-y-1/2 px-5 py-2 bg-red-600 text-white font-semibold rounded-full shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm cursor-pointer"
+            className="absolute right-1 top-1/2 -translate-y-1/2 px-5 py-3 bg-red-600 text-white font-semibold rounded-full shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm cursor-pointer"
             >
             Send
             </button>

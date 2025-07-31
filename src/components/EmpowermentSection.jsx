@@ -5,7 +5,7 @@ import building from "../assets/building.png"; // Assuming this is for your imag
 
 const EmpowermentSection = () => {
   return (
-    <div className="font-sans text-gray-800 bg-white">
+    <div className="font-sans text-gray-800 bg-white py-20">
       {/* Header Section */}
       <header className="py-10 px-6 md:px-12 lg:px-24">
         <h1 className="text-4xl md:text-4xl font-bold leading-tight">

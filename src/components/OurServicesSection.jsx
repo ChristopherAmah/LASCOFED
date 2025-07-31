@@ -42,7 +42,7 @@ const services = [
 
 const OurServicesSection = () => {
   return (
-    <section className="py-20 px-4 md:px-16 bg-white">
+    <section className="py-20 px-4 md:px-16 bg-[#F8F8F8]">
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-12">
         <div>
