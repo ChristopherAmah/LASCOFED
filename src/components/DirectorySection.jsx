@@ -223,7 +223,7 @@ const DirectorySection = () => {
   };
 
   return (
-    <section className="bg-red-50 py-20 px-4 md:px-16">
+    <section className="bg-[#F8F8F8] py-20 px-4 md:px-16">
       {/* Header */}
       <div className="text-center mb-10">
         <h2 className="text-red-500 text-sm font-semibold uppercase mb-2">

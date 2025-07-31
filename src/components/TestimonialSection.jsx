@@ -104,7 +104,7 @@ const TestimonialSection = () => {
                 {
                     testimonials.map((testimonial) => (
                         <SwiperSlide key={testimonial.id} className='h-full md:py-6 py-4'>
-                            <div className='bg-white p-4 rounded-lg shadow-md h-full flex flex-col transition-colors duration-300 hover:bg-red-50'>
+                            <div className='bg-white p-4 rounded-lg border border-gray-100 h-full flex flex-col transition-colors duration-300 hover:bg-red-50'>
                                 {/* Star Rating */}
                                 <div className='flex mb-4 text-yellow-400'>
                                 {[...Array(5)].map((_, i) => (

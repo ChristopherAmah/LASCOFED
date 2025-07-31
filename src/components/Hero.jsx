@@ -19,7 +19,7 @@ const slides = [
     subtitle:
       "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
     phone: "+2348023117726",
-    buttonText: "Active Button",
+    buttonText: "Learn More",
   },
   {
     image: slide2,
@@ -27,7 +27,7 @@ const slides = [
     subtitle:
       "As the apex body for cooperative societies in Lagos State, LASCOFED leads with innovation, advocacy, and support for sustainable development.",
     phone: "+2348023117726",
-    buttonText: "Active Button",
+    buttonText: "Learn More",
   },
   // {
   //   image: building,
