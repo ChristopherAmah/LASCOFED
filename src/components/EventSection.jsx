@@ -151,7 +151,7 @@ const EventSection = () => {
   };
 
   return (
-    <section className="py-20 bg-white font-sans px-10">
+    <section className="py-20 bg-white font-sans">
       <div className="container mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -165,7 +165,7 @@ const EventSection = () => {
         </div>
 
         {/* Category Filter Buttons */}
-        <div className="flex justify-center space-x-4 mb-12 px-4">
+        <div className="flex justify-center space-x-4 mb-12">
           {['All', 'Seminars', 'Trainings', 'Tours'].map((category) => (
             <button
               key={category}
