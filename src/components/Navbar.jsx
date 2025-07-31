@@ -14,7 +14,7 @@ const Navbar = () => {
       </div>
 
       {/* Nav Links */}
-      <ul className="hidden md:flex space-x-6 text-sm font-semibold text-gray-700">
+      <ul className="hidden md:flex space-x-4 text-gray-700" style={{fontSize: '14px'}}>
         <li><a href="#" className="text-red-600">HOME</a></li>
         <li><a href="#" className="hover:text-red-600">ABOUT US</a></li>
         <li><a href="#" className="hover:text-red-600">OUR PORTFOLIO</a></li>
@@ -27,8 +27,8 @@ const Navbar = () => {
       <div>
         <a
           href="#"
-          className="hover:bg-red-700 text-white text-sm font-semibold py-3 px-5 rounded-full"
-          style={{background: '#ED1B24'}}
+          className="hover:bg-red-700 text-white py-3 px-5 rounded-full"
+          style={{background: '#ED1B24', fontSize:'14px'}}
         >
           CONTACT US
         </a>

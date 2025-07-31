@@ -1,6 +1,10 @@
-// src/components/EventSlider.jsx
+// src/components/EventSection.jsx
 import React, { useState, useEffect } from 'react';
-import building from '../assets/building.png'; // Make sure this path is correct
+import building from '../assets/building.png'; 
+import event1 from '../assets/event1.png'; 
+import ev2 from '../assets/ev2.png'; 
+import ev3 from '../assets/ev3.png'; 
+import ev4 from '../assets/ev4.png'; 
 
 const events = [
   {
@@ -8,7 +12,7 @@ const events = [
     name: 'Annual General Meeting',
     date: '24 October, 2024',
     location: 'Lagos',
-    image: building, // Changed to building
+    image: event1,
     category: 'Trainings',
   },
   {
@@ -16,7 +20,7 @@ const events = [
     name: 'Community Outreach Program',
     date: '15 November, 2024',
     location: 'Abuja',
-    image: building, // Changed to building
+    image: ev2,
     category: 'Trainings',
   },
   {
@@ -24,7 +28,7 @@ const events = [
     name: 'Leadership Workshop',
     date: '01 December, 2024',
     location: 'Port Harcourt',
-    image: building, // Changed to building
+    image: ev4,
     category: 'Tours',
   },
   {
@@ -32,7 +36,7 @@ const events = [
     name: 'Product Launch Event',
     date: '10 January, 2025',
     location: 'Kano',
-    image: building, // Changed to building
+    image: ev3,
     category: 'Tours',
   },
   {
@@ -40,7 +44,7 @@ const events = [
     name: 'Innovation Summit',
     date: '28 February, 2025',
     location: 'Enugu',
-    image: building, // Changed to building
+    image: ev4,
     category: 'Seminars',
   },
 ];
@@ -50,20 +54,22 @@ const EventSection = () => {
   const [filteredEvents, setFilteredEvents] = useState(events);
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
 
+  // useEffect to initialize the slider to the middle card
   useEffect(() => {
     const initialFilteredEvents = activeCategory === 'All'
       ? events
       : events.filter(event => event.category === activeCategory);
 
-    setFilteredEvents(initialFilteredEvents);
+    setFilteredEvents(initialFilteredEvents); // Update filtered events state
 
+    // Calculate the middle index for the current filtered list
     if (initialFilteredEvents.length > 0) {
       const middleIndex = Math.floor(initialFilteredEvents.length / 2);
       setCurrentEventIndex(middleIndex);
     } else {
-      setCurrentEventIndex(0);
+      setCurrentEventIndex(0); // If no events, default to 0
     }
-  }, [activeCategory]);
+  }, [activeCategory]); // Dependency array: re-run when activeCategory changes
 
   const totalEvents = filteredEvents.length;
 
@@ -76,6 +82,7 @@ const EventSection = () => {
   };
 
   const getCardTransform = (index) => {
+    // Adjust displayIndex to handle circularity and make items appear to wrap around
     let displayIndex = index;
     if (totalEvents > 0) {
         if (index - currentEventIndex > totalEvents / 2) {
@@ -92,48 +99,54 @@ const EventSection = () => {
     let opacity = 1;
     let scale = 1;
 
+    // Styling for cards based on their offset from the current active card
     if (offset === 0) {
+      // Active card (middle)
       translateX = '0%';
       rotation = '0deg';
-      zIndex = 10;
+      zIndex = 10; // Highest z-index to be on top
       scale = 1;
       opacity = 1;
     } else if (offset === 1) {
-      translateX = '40%';
-      rotation = '5deg';
+      // Immediately to the right of center
+      translateX = '40%'; // Adjust horizontal position
+      rotation = '5deg'; // Slight rotation
       zIndex = 9;
       opacity = 0.8;
       scale = 0.95;
     } else if (offset === 2) {
-      translateX = '80%';
-      rotation = '10deg';
+      // Second card to the right
+      translateX = '80%'; // More horizontal position
+      rotation = '10deg'; // More rotation
       zIndex = 8;
       opacity = 0.6;
       scale = 0.9;
     } else if (offset === -1) {
-      translateX = '-40%';
-      rotation = '-5deg';
+      // Immediately to the left of center
+      translateX = '-40%'; // Adjust horizontal position
+      rotation = '-5deg'; // Slight rotation
       zIndex = 9;
       opacity = 0.8;
       scale = 0.95;
     } else if (offset === -2) {
-      translateX = '-80%';
-      rotation = '-10deg';
+      translateX = '-80%'; // More horizontal position
+      rotation = '-10deg'; // More rotation
       zIndex = 8;
       opacity = 0.6;
       scale = 0.9;
     } else {
-      opacity = 0;
-      zIndex = 1;
+      // Cards further away (hidden or almost hidden)
+      opacity = 0; // Make them completely transparent
+      zIndex = 1; // Lowest z-index
       scale = 0.8;
-      translateX = offset > 0 ? '120%' : '-120%';
+      translateX = offset > 0 ? '120%' : '-120%'; // Push them far off-screen
     }
 
     return {
       transform: `translateX(${translateX}) rotate(${rotation}) scale(${scale})`,
       zIndex: zIndex,
       opacity: opacity,
-      transition: 'all 0.5s ease-in-out',
+      transition: 'all 0.5s ease-in-out', // Smooth transitions for all properties
     };
   };
 
@@ -151,18 +164,19 @@ const EventSection = () => {
           </p>
         </div>
 
-        {/* Category Filter */}
+        {/* Category Filter Buttons */}
         <div className="flex justify-center space-x-4 mb-12">
           {['All', 'Seminars', 'Trainings', 'Tours'].map((category) => (
             <button
               key={category}
               onClick={() => {
                 setActiveCategory(category);
+                // useEffect hook handles resetting currentEventIndex to the middle of the new filtered list
               }}
               className={`px-6 py-2 rounded-full font-medium text-sm transition-colors duration-300
                 ${activeCategory === category
-                  ? 'bg-red-600 text-white shadow-md'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  ? 'bg-red-600 text-white shadow-md' // Active category button style
+                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200' // Inactive category button style
                 }`}
             >
               {category}
@@ -170,25 +184,35 @@ const EventSection = () => {
           ))}
         </div>
 
-        {/* Slider Section */}
+        {/* Slider Section Container */}
         <div className="relative w-full max-w-5xl mx-auto h-[450px] overflow-hidden flex items-center justify-center">
           {filteredEvents.length > 0 ? (
             filteredEvents.map((event, index) => (
               <div
                 key={event.id}
-                className="absolute w-[300px] md:w-[400px] h-[400px] bg-white rounded-lg shadow-xl overflow-hidden cursor-pointer
+                className="absolute w-[300px] md:w-[500px] h-[400px] rounded-lg shadow-xl overflow-hidden cursor-pointer
                            flex flex-col transform origin-center transition-all duration-500 ease-in-out"
-                style={getCardTransform(index)}
+                // Apply combined styles: transformations and background image
+                style={{
+                  ...getCardTransform(index),
+                  backgroundImage: `url('${event.image}')`, // Set image as background
+                  backgroundSize: 'cover',        // Cover the entire card
+                  backgroundPosition: 'center',   // Center the background image
+                  backgroundRepeat: 'no-repeat'   // Prevent image repetition
+                }}
               >
-                <img
-                  src={event.image}
-                  alt={event.name}
-                  className="w-full h-2/3 object-cover"
-                />
-                <div className="p-4 flex-grow flex flex-col justify-end">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{event.name}</h3>
-                  <p className="text-gray-600 text-sm">{event.date}</p>
-                  <p className="text-gray-500 text-xs mt-1">{event.location}</p>
+                {/* Gradient Overlay - no z-index needed if it's the first child, or a lower one like z-0 */}
+                <div className="absolute inset-0 bg-black/30 z-0"> {/* Changed z-10 to z-0 or simply remove z-index */}
+                    {/* The two gradients: from left to right, and from top to bottom */}
+                    {/* <div className="h-full w-full bg-gradient-to-r from-black/70 via-black/50 to-transparent absolute inset-0"></div>
+                    <div className="h-full w-full bg-gradient-to-b from-black/60 via-black/30 to-transparent absolute inset-0"></div> */}
+                </div>
+
+                {/* Text Overlay for Event Details - Give it a higher z-index */}
+                <div className="absolute bottom-0 left-0 w-full text-white p-4 z-10"> {/* Added z-10 */}
+                  <h3 className="text-xl font-semibold mb-1">{event.name}</h3>
+                  <p className="text-sm">{event.date}</p>
+                  <p className="text-sm">{event.location}</p> {/* Added location here */}
                 </div>
               </div>
             ))

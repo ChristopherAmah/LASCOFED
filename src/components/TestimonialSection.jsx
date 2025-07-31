@@ -5,8 +5,11 @@ import { Navigation } from 'swiper/modules';
 //Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { FaArrowRight } from "react-icons/fa6";
-import { FaArrowLeft } from "react-icons/fa6";
+// import { FaArrowRight } from "react-icons/fa6";
+// import { FaArrowLeft } from "react-icons/fa6";
+import { PiGreaterThan } from "react-icons/pi";
+import { PiLessThan } from "react-icons/pi";
+
 
 
 const testimonials = [
@@ -100,8 +103,8 @@ const TestimonialSection = () => {
             >
                 {
                     testimonials.map((testimonial) => (
-                        <SwiperSlide key={testimonial.id} className='h-full md:py-12 py-4'>
-                            <div className='bg-white p-4 rounded-lg shadow-md h-full flex flex-col transition-colors duration-300'>
+                        <SwiperSlide key={testimonial.id} className='h-full md:py-6 py-4'>
+                            <div className='bg-white p-4 rounded-lg shadow-md h-full flex flex-col transition-colors duration-300 hover:bg-red-50'>
                                 {/* Star Rating */}
                                 <div className='flex mb-4 text-yellow-400'>
                                 {[...Array(5)].map((_, i) => (
@@ -136,11 +139,11 @@ const TestimonialSection = () => {
             <div className='flex justify-center gap-4 md:mt-8 mt-4'>
                 <button className='swiper-button-prev-custom w-12 h-12 rounded-full flex items-center justify-center
                 hover:bg-red-500 hover:text-white transition-all duration-200 cursor-pointer'>
-                    <FaArrowLeft />
+                    <PiLessThan />
                 </button>
                 <button className='swiper-button-next-custom w-12 h-12 rounded-full flex items-center justify-center
                 hover:bg-red-500 hover:text-white transition-all duration-200 cursor-pointer'>
-                    <FaArrowRight />
+                    <PiGreaterThan />
                 </button>
             </div>
         </div>

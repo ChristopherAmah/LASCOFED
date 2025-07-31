@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const ITEMS_PER_PAGE = 6;
@@ -196,14 +196,25 @@ const data = [
 ];
 
 const DirectorySection = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+  // Filter logic
+  const filteredData = data.filter((person) => {
+    const fullText = `${person.name} ${person.union} ${person.position} ${person.phone} ${person.email}`.toLowerCase();
+    return fullText.includes(searchTerm.toLowerCase());
+  });
 
-  const paginatedData = data.slice(
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -231,8 +242,10 @@ const DirectorySection = () => {
         <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl pointer-events-none" />
         <input
           type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by Union, Society, Member..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 text-sm"
         />
       </div>
 
@@ -253,7 +266,7 @@ const DirectorySection = () => {
             {paginatedData.map((person, index) => (
               <tr
                 key={index}
-                className={(index % 2 === 0 ? "bg-white" : "bg-red-50")}
+                className={index % 2 === 0 ? "bg-white" : "bg-red-50"}
               >
                 <td className="px-6 py-4">
                   {(currentPage - 1) * ITEMS_PER_PAGE + index + 1}
@@ -269,10 +282,10 @@ const DirectorySection = () => {
         </table>
       </div>
 
-      {/* Pagination Controls */}
+      {/* Pagination */}
       <div className="mt-10 flex justify-center items-center gap-2 text-gray-700 text-sm">
         <button
-          className="px-3 py-1 text-gray-600 rounded hover:bg-gray-200 disabled:opacity-30"
+          className="px-3 py-1 text-gray-600 rounded hover:bg-red-200 disabled:opacity-30 cursor-pointer"
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
         >
@@ -294,7 +307,7 @@ const DirectorySection = () => {
         ))}
 
         <button
-          className="px-3 py-1 text-gray-600 rounded hover:bg-gray-200 disabled:opacity-30"
+          className="px-3 py-1 text-gray-600 rounded hover:bg-red-200 disabled:opacity-30 cursor-pointer"
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
         >
