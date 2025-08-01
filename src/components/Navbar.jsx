@@ -13,7 +13,7 @@ const Navbar = () => {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <nav className="bg-white shadow-sm px-4 md:px-10 py-2 flex justify-between items-center relative z-50">
+    <nav className="bg-white shadow-sm px-4 md:px-10 py-4 flex justify-between items-center relative z-50">
       {/* Logo */}
       <div className="flex items-center">
         <img src={logo} alt="Logo" className="h-10 w-auto" />
@@ -24,7 +24,6 @@ const Navbar = () => {
         <li><NavLink to="/" className={navLinkClass}>HOME</NavLink></li>
         <li><NavLink to="/aboutus" className={navLinkClass}>ABOUT US</NavLink></li>
         <li><a href="#" className="text-gray-700 hover:text-red-600">OUR PORTFOLIO</a></li>
-        <li><a href="#" className="text-gray-700 hover:text-red-600">TRAVEL & TOUR</a></li>
         <li><a href="#" className="text-gray-700 hover:text-red-600">TRAINING & DEVELOPMENT CENTRE</a></li>
         <li><a href="#" className="text-gray-700 hover:text-red-600">PUBLICATIONS</a></li>
       </ul>
@@ -33,7 +32,7 @@ const Navbar = () => {
       <div className="hidden md:block">
         <NavLink
           to="/contact"
-          className="hover:bg-red-700 text-white py-3 px-5 rounded-full"
+          className="hover:bg-red-700 text-white py-2 px-5 rounded-full"
           style={{ background: '#ED1B24', fontSize: '14px' }}
         >
           CONTACT US

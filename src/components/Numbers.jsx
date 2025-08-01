@@ -1,44 +1,111 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 const features = [
-    {
-      icon: "24", 
-      description: "Unions"
+  {
+    icon: 24,
+    description: "Unions across sectors & LGAs within Lagos.",
+    suffix: "",
+  },
+  {
+    icon: 1000,
+    description: "Registered cooperative societies & multipurpose groups.",
+    suffix: "+",
+  },
+  {
+    icon: 2000000,
+    description: "Cooperative Members, various occupations statewide.",
+    suffix: "",
+  },
+];
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.2,
+      duration: 0.6,
+      ease: "easeOut",
     },
-    {
-      icon: "1000+",
-      description: "Societes"
-    },
-    {
-      icon: "2 Million+",
-      description: "Cooperators In Lagos"
+  }),
+};
+
+// Helper to format numbers with commas
+const formatNumber = (value) =>
+  value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+const CountUp = ({ to, duration = 2, suffix = "" }) => {
+  const [count, setCount] = useState(0);
+  const controls = useAnimation();
+  const ref = React.useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start({
+        value: to,
+        transition: { duration },
+      });
     }
-  ]
+  }, [controls, to, duration, inView]);
+
+  return (
+    <motion.span
+      ref={ref}
+      animate={controls}
+      initial={{ value: 0 }}
+      onUpdate={(latest) => {
+        setCount(Math.floor(latest.value));
+      }}
+      className="text-white text-4xl md:text-5xl font-extrabold mb-2"
+    >
+      {formatNumber(count)}
+      {suffix}
+    </motion.span>
+  );
+};
 
 const Numbers = () => {
   return (
-    <>
-   <section className="max-w-7xl mx-auto px-4 py-12">
-      <div className="bg-[#101010] py-8 px-6 mx-auto w-full md:w-10/12 lg:w-9/12" style={{ borderRadius: '12px' }}>
-        {/* heading texts */}
+    <section className="max-w-7xl mx-auto px-4 py-16">
+      <div className="bg-[#101010] py-12 px-6 rounded-xl w-full md:w-10/12 lg:w-11/12 mx-auto">
+        {/* heading */}
         <div className="text-center mb-12">
-          <p className="font-semibold text-white">OUR NUMBERS</p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide uppercase"
+          >
+            Our Numbers
+          </motion.p>
         </div>
 
-        {/* features box */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* feature grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 text-center">
           {features.map((feature, index) => (
-            <div key={index} className="flex flex-col text-center items-center">
-              <div className="text-[48px] font-bold text-white">{feature.icon}</div>
-              <p className="text-[16px] text-white text-center">{feature.description}</p>
-            </div>
+            <motion.div
+              key={index}
+              custom={index}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="flex flex-col items-center"
+            >
+              <CountUp to={feature.icon} suffix={feature.suffix} />
+              <p className="text-white text-sm sm:text-base md:text-lg max-w-xs ">
+                {feature.description}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>
     </section>
+  );
+};
 
-    </>
-  )
-}
-
-export default Numbers
+export default Numbers;
+  

@@ -1,54 +1,38 @@
 import { section } from 'framer-motion/client';
 import React from 'react';
+import ctabg from '../assets/ctabg.png'
 
 const SubscribeSection = () => {
   return (
-    <section className="relative py-20 px-4 md:px-8 bg-red-50 font-sans overflow-hidden">
-        <div className='px-20'>
-      {/* Abstract Shapes - Top Left Dots */}
-      <div className="absolute top-4 left-4 md:top-8 md:left-8">
-        <div className="grid grid-cols-4 gap-1">
-          {[...Array(16)].map((_, i) => (
-            <div key={i} className="w-2 h-2 bg-red-500 rounded-full"></div>
-          ))}
-        </div>
-      </div>
-
-      {/* Abstract Shapes - Top Right Diamond */}
-      <div className="absolute top-8 right-8 w-4 h-4 bg-red-500 transform rotate-45"></div>
-
-      {/* Abstract Shapes - Bottom Left Diamond */}
-      <div className="absolute bottom-8 left-8 w-3 h-3 bg-yellow-400 transform rotate-45"></div>
-
-      {/* Abstract Shapes - Bottom Right Dots */}
-      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8">
-        <div className="grid grid-cols-3 gap-1">
-          {[...Array(9)].map((_, i) => (
-            <div key={i} className="w-2 h-2 bg-red-500 rounded-full"></div>
-          ))}
-        </div>
-      </div>
+    <section className='relative mb-8 md:py-8 md:px-40 font-sans md:rounded-[24px] overflow-hidden'>
+      <div className="bg-cover bg-center py-6 md:py-8"
+      style={{
+          backgroundImage: `url(${ctabg})`,
+      }}>
+    <div className='px-20'>
 
       {/* Content Container */}
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <h2 className="text-4xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight">
           Subscribe to CoopLight NewsLetter!
         </h2>
-        <p className="text-gray-600 mb-10">
+        <p className="text-[#3B3B3B] mb-10" style={{fontSize: '16px'}}>
           Stay Informed: Subscribe to Our Newsletter for Updates & Insights
         </p>
 
         {/* Email Input and Button */}
         <div className="flex justify-center items-center">
-        <div className="relative w-full md:w-3/5 lg:w-3/5">
+        <div className="relative w-full md:w-3/5 lg:w-4/5">
             <input
             type="email"
-            placeholder="Your Email"
-            className="w-full pr-24 pl-4 py-3 rounded-full border border-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-700 bg-white"
+            placeholder="Enter Your Email"
+            className="w-full pr-24 pl-4 py-3 border border-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-700 bg-white"
+            style={{borderRadius: '10px'}}
             />
             <button
             type="submit"
-            className="absolute right-1 top-1/2 -translate-y-1/2 px-5 py-3 bg-red-600 text-white font-semibold rounded-full  hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 px-7 py-2 bg-red-600 text-white font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors duration-300 text-sm cursor-pointer"
+            style={{borderRadius: '8px'}}
             >
             Send
             </button>
@@ -56,6 +40,7 @@ const SubscribeSection = () => {
         </div>
 
       </div>
+    </div>
     </div>
     </section>
   );

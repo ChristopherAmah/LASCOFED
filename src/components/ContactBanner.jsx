@@ -3,7 +3,7 @@ import React from 'react';
 
 const ContactBanner = () => {
   return (
-    <section className="relative py-20 px-4 md:px-8 bg-red-50 font-sans overflow-hidden">
+    <section className="relative py-8 px-4 md:px-8 bg-red-50 font-sans overflow-hidden">
         <div className='px-20'>
       {/* Abstract Shapes - Top Left Dots */}
       <div className="absolute top-4 left-4 md:top-8 md:left-8">
