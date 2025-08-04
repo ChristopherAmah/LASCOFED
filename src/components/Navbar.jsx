@@ -20,12 +20,12 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Nav Links */}
-      <ul className="hidden md:flex space-x-4 text-sm">
+      <ul className="hidden md:flex space-x-4 text-sm font-sans">
         <li><NavLink to="/" className={navLinkClass}>HOME</NavLink></li>
         <li><NavLink to="/aboutus" className={navLinkClass}>ABOUT US</NavLink></li>
-        <li><a href="#" className="text-gray-700 hover:text-red-600">OUR PORTFOLIO</a></li>
-        <li><a href="#" className="text-gray-700 hover:text-red-600">TRAINING & DEVELOPMENT CENTRE</a></li>
-        <li><a href="#" className="text-gray-700 hover:text-red-600">PUBLICATIONS</a></li>
+        <li><NavLink to="/portfolio" className={navLinkClass}>OUR PORTFOLIO</NavLink></li>
+        <li><NavLink to="/training" className={navLinkClass}>TRAINING & DEVELOPMENT CENTRE</NavLink></li>
+        <li><NavLink to="/publications" className={navLinkClass}>PUBLICATIONS</NavLink></li>
       </ul>
 
       {/* Contact Button */}
@@ -59,11 +59,10 @@ const Navbar = () => {
         <ul className="flex flex-col p-6 space-y-4 text-sm">
           <li><NavLink to="/" onClick={closeMenu} className={navLinkClass}>HOME</NavLink></li>
           <li><NavLink to="/aboutus" onClick={closeMenu} className={navLinkClass}>ABOUT US</NavLink></li>
-          <li><a href="#" className="text-gray-700 hover:text-red-600">OUR PORTFOLIO</a></li>
-          <li><a href="#" className="text-gray-700 hover:text-red-600">TRAVEL & TOUR</a></li>
-          <li><a href="#" className="text-gray-700 hover:text-red-600">TRAINING & DEVELOPMENT CENTRE</a></li>
-          <li><a href="#" className="text-gray-700 hover:text-red-600">PUBLICATIONS</a></li>
-          <li>
+          <li><NavLink to="/portfolio" onClick={closeMenu} className={navLinkClass}>OUR PORTFOLIO</NavLink></li>
+          <li><NavLink to="/training" onClick={closeMenu} className={navLinkClass}>TRAINING & DEVELOPMENT CENTRE</NavLink></li>
+          <li><NavLink to="/publications" onClick={closeMenu} className={navLinkClass}>PUBLICATIONS</NavLink></li>
+          <li className="mt-4">
             <NavLink
               to="/contact"
               onClick={closeMenu}

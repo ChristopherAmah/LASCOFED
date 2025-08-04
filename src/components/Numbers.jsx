@@ -59,7 +59,7 @@ const CountUp = ({ to, duration = 2, suffix = "" }) => {
       onUpdate={(latest) => {
         setCount(Math.floor(latest.value));
       }}
-      className="text-white text-4xl md:text-5xl font-extrabold mb-2"
+      className="text-white text-4xl md:text-5xl font-extrabold mb-2 font-sans"
     >
       {formatNumber(count)}
       {suffix}
@@ -77,7 +77,7 @@ const Numbers = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide uppercase"
+            className="text-white font-semibold text-sm sm:text-base md:text-lg tracking-wide uppercase font-sans"
           >
             Our Numbers
           </motion.p>

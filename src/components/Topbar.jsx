@@ -3,7 +3,7 @@ import { FaPhone, FaMapMarkerAlt, FaFacebookF, FaTwitter, FaInstagram, FaLinkedi
 
 const TopBar = () => {
   return (
-    <div className="bg-black text-white text-sm px-4 md:px-10 py-2 flex flex-col md:flex-row justify-between items-center">
+    <div className="bg-black text-white text-sm px-4 md:px-10 py-2 flex flex-col md:flex-row justify-between items-center font-sans">
       {/* Left Section */}
       <div className="flex flex-col md:flex-row items-center gap-4">
         <div className="flex items-center gap-1">

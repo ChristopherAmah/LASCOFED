@@ -57,7 +57,7 @@ const childVariants = {
 
 const Hero = () => {
   return (
-    <div className="relative">
+    <div className="relative font-sans">
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
@@ -132,10 +132,10 @@ const Hero = () => {
         <SwiperSlide>
           <div className="relative z-10 px-10 max-w-4xl mx-auto py-10">
             <p className="text-lg md:text-xl italic font-light">
-              “<span className="font-semibold">Cooperatives</span> are a reminder to the international community that it is
+              “<span className="font-semibold font-sans">Cooperatives</span> are a reminder to the international community that it is
               possible to pursue both economic viability and social responsibility.”
             </p>
-            <p className="mt-4 text-right text-sm md:text-base italic">
+            <p className="mt-4 text-right text-sm md:text-base italic font-sans">
               — Ban Ki-moon, Former UN Secretary-General
             </p>
           </div>

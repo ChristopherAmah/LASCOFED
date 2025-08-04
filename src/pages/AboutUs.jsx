@@ -1,9 +1,16 @@
 import React from 'react'
+import AboutBanner from '../components/AboutBanner'
+import AboutCta from '../components/AboutCta'
+import SubscribeSection from '../components/SusbscribeSection'
+import MissionVision from '../components/MissionVision'
 
 const AboutUs = () => {
   return (
     <>
-    <section>aboutus</section>
+    <AboutBanner />
+    <AboutCta />
+    <MissionVision />
+    <SubscribeSection />
     </>
   )
 }

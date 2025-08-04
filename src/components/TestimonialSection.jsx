@@ -65,7 +65,7 @@ const testimonials = [
 
 const TestimonialSection = () => {
   return (
-    <section className='py-10 md:px-20 px-4 max-w-7xl mx-auto' id='testimonials'>
+    <section className='py-10 md:px-20 px-4 max-w-7xl mx-auto font-sans' id='testimonials'>
         {/* heading texts */}
         <div className="text-center mb-6">
           <p className="font-semibold text-red-500">TESTIMONIALS</p>

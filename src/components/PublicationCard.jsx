@@ -1,0 +1,253 @@
+import React, { useState } from "react";
+import pub1 from "../assets/pub1.jpg";
+import pub2 from "../assets/pub2.jpg";
+import pub3 from "../assets/pub3.jpg";
+import pub4 from "../assets/pub4.jpg";
+
+const filters = ["All", "2025", "2024", "2023", "2022", "2021"];
+
+const publications = [
+  {
+    year: "2023",
+    category: "Cooperative Leaders' Conference",
+    title: "2023 Cooperative Leaders’ Conference",
+    description:
+      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
+    image: pub1,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Festival",
+    title: "2023 Cooperative Festival",
+    description:
+      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
+    image: pub2,
+  },
+  {
+    year: "2022",
+    category: "Cooperative Leaders' Conference",
+    title: "2022 LASCOFED Leaders' Conference",
+    description:
+      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
+    image: pub3,
+  },
+  {
+    year: "2021",
+    category: "Cooperative Leaders' Conference",
+    title: "2021 LASCOFED Leaders' Conference",
+    description:
+      "The conference focused on recovery strategies, digital adoption, and member welfare.",
+    image:  pub4,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Leaders' Conference",
+    title: "2023 Cooperative Leaders’ Conference",
+    description:
+      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
+    image: pub1,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Festival",
+    title: "2023 Cooperative Festival",
+    description:
+      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
+    image: pub2,
+  },
+  {
+    year: "2022",
+    category: "Cooperative Leaders' Conference",
+    title: "2022 LASCOFED Leaders' Conference",
+    description:
+      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
+    image: pub3,
+  },
+  {
+    year: "2021",
+    category: "Cooperative Leaders' Conference",
+    title: "2021 LASCOFED Leaders' Conference",
+    description:
+      "The conference focused on recovery strategies, digital adoption, and member welfare.",
+    image:  pub4,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Leaders' Conference",
+    title: "2023 Cooperative Leaders’ Conference",
+    description:
+      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
+    image: pub1,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Festival",
+    title: "2023 Cooperative Festival",
+    description:
+      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
+    image: pub2,
+  },
+  {
+    year: "2022",
+    category: "Cooperative Leaders' Conference",
+    title: "2022 LASCOFED Leaders' Conference",
+    description:
+      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
+    image: pub3,
+  },
+  {
+    year: "2021",
+    category: "Cooperative Leaders' Conference",
+    title: "2021 LASCOFED Leaders' Conference",
+    description:
+      "The conference focused on recovery strategies, digital adoption, and member welfare.",
+    image:  pub4,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Leaders' Conference",
+    title: "2023 Cooperative Leaders’ Conference",
+    description:
+      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
+    image: pub1,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Festival",
+    title: "2023 Cooperative Festival",
+    description:
+      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
+    image: pub2,
+  },
+  {
+    year: "2022",
+    category: "Cooperative Leaders' Conference",
+    title: "2022 LASCOFED Leaders' Conference",
+    description:
+      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
+    image: pub3,
+  },
+  {
+    year: "2021",
+    category: "Cooperative Leaders' Conference",
+    title: "2021 LASCOFED Leaders' Conference",
+    description:
+      "The conference focused on recovery strategies, digital adoption, and member welfare.",
+    image:  pub4,
+  },
+];
+
+function PublicationCard() {
+  const [activeYear, setActiveYear] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("");
+
+  const filteredPublications =
+    activeYear === "All"
+      ? publications
+      : publications.filter((pub) => pub.year === activeYear);
+
+  const categoriesInYear = [
+    ...new Set(filteredPublications.map((pub) => pub.category)),
+  ];
+
+  const finalPublications = activeCategory
+    ? filteredPublications.filter((pub) => pub.category === activeCategory)
+    : filteredPublications;
+
+  return (
+    <div className="min-h-screen p-6 max-w-7xl mx-auto">
+
+      {/* Top Filters */}
+      <div className="flex gap-2 mb-10 flex-wrap justify-center">
+        {filters.map((filter) => (
+          <button
+            key={filter}
+            onClick={() => {
+              setActiveYear(filter);
+              setActiveCategory(""); // Reset category on year change
+            }}
+            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+              activeYear === filter
+                ? "bg-red-600 text-white"
+                : "bg-gray-100 text-gray-800 hover:bg-red-100 cursor-pointer"
+            }`}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Left Sidebar */}
+        <div className="w-full lg:w-1/4 space-y-4 md:px-10">
+          {categoriesInYear.map((category, index) => (
+            <div
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`cursor-pointer flex items-start gap-3 ${
+                activeCategory === category || (activeCategory === "" && index === 0)
+                  ? "text-red-600"
+                  : "text-gray-400"
+              }`}
+            >
+              <div
+                className={`w-8 h-8 rounded-full p-2 flex items-center justify-center text-white font-semibold ${
+                  activeCategory === category || (activeCategory === "" && index === 0)
+                    ? "bg-red-600"
+                    : "bg-gray-300"
+                }`}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </div>
+              <div>
+                <div className="font-semibold">{category}</div>
+                <div className="text-sm mt-1">
+                  {/* Optional: Add description per category if you want */}
+                  {category === "Cooperative Leaders' Conference" &&
+                    "Bringing leaders together to explore solutions."}
+                  {category === "Cooperative Festival" &&
+                    "A vibrant celebration of unity and diversity."}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Cards */}
+        <div className="w-full lg:w-3/4 grid gap-8 grid-cols-1 md:grid-cols-3 md:px-10 ">
+          {finalPublications.map((pub, index) => (
+            <div
+              key={index}
+              className="bg-white overflow-hidden flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              style={{borderTopLeftRadius: '8px', borderTopRightRadius: '8px'}}
+            >
+              <div className="relative">
+                <img
+                  src={pub.image}
+                  alt={pub.title}
+                  className="w-full h-48 object-cover"
+                />
+                <span className="absolute top-2 left-2 bg-red-500 text-white text-[14px] px-3 py-1 rounded-[8px]">
+                  All
+                </span>
+              </div>
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="text-lg font-bold mb-2">{pub.title}</h3>
+                <p className="text-gray-600 mb-4 flex-grow">{pub.description}</p>
+                <a
+                  href="#"
+                  className="text-red-600 text-sm font-semibold hover:text-red-900 mt-auto"
+                >
+                  Read More &rarr;
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default PublicationCard;
