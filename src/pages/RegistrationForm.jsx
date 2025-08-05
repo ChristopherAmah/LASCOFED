@@ -160,13 +160,15 @@ const PersonalInfoForm = ({ onNext }) => {
         </div>
       </div>
 
-      {/* Submit Button */}
-      <div className="mt-8">
+      {/* Next Button */}
+      <div className="flex justify-end">
         <button
-          type="submit"
-          className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition-colors"
+          type="button"
+          onClick={onNext}
+          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
         >
-          Submit
+          Next
+          <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />
         </button>
       </div>
     </form>
