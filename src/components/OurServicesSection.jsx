@@ -91,7 +91,7 @@ const OurServicesSection = () => {
             <button className="text-red-500 text-sm font-semibold flex items-center gap-1 group">
               Learn More{" "}
               <span className="transform group-hover:translate-x-1 transition-transform">
-                →
+                &gt;
               </span>
             </button>
           </div>

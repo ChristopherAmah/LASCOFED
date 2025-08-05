@@ -262,9 +262,12 @@ function PublicationCard() {
                 <p className="text-gray-600 mb-4 flex-grow">{pub.description}</p>
                 <a
                   href="#"
-                  className="text-red-600 text-sm font-semibold hover:text-red-900 mt-auto"
+                  className="group flex items-center text-red-600 text-sm font-semibold hover:text-red-900 mt-auto"
                 >
-                  Read More &rarr;
+                  Read More{" "}
+                  <span className="ml-1 transform transition-transform group-hover:translate-x-1">
+                    &gt;
+                  </span>
                 </a>
               </div>
             </div>
