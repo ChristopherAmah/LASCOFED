@@ -4,8 +4,7 @@ import pub2 from "../assets/pub2.jpg";
 import pub3 from "../assets/pub3.jpg";
 import pub4 from "../assets/pub4.jpg";
 
-const filters = ["All", "2025", "2024", "2023", "2022", "2021"];
-
+// This is the main data for publications
 const publications = [
   {
     year: "2023",
@@ -37,7 +36,40 @@ const publications = [
     title: "2021 LASCOFED Leaders' Conference",
     description:
       "The conference focused on recovery strategies, digital adoption, and member welfare.",
-    image:  pub4,
+    image: pub4,
+  },
+  // ... (rest of your publications data)
+  {
+    year: "2023",
+    category: "Cooperative Leaders' Conference",
+    title: "2023 Cooperative Leaders’ Conference",
+    description:
+      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
+    image: pub1,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Festival",
+    title: "2023 Cooperative Festival",
+    description:
+      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
+    image: pub2,
+  },
+  {
+    year: "2022",
+    category: "Cooperative Leaders' Conference",
+    title: "2022 LASCOFED Leaders' Conference",
+    description:
+      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
+    image: pub3,
+  },
+  {
+    year: "2021",
+    category: "Cooperative Leaders' Conference",
+    title: "2021 LASCOFED Leaders' Conference",
+    description:
+      "The conference focused on recovery strategies, digital adoption, and member welfare.",
+    image: pub4,
   },
   {
     year: "2023",
@@ -69,7 +101,7 @@ const publications = [
     title: "2021 LASCOFED Leaders' Conference",
     description:
       "The conference focused on recovery strategies, digital adoption, and member welfare.",
-    image:  pub4,
+    image: pub4,
   },
   {
     year: "2023",
@@ -101,41 +133,11 @@ const publications = [
     title: "2021 LASCOFED Leaders' Conference",
     description:
       "The conference focused on recovery strategies, digital adoption, and member welfare.",
-    image:  pub4,
-  },
-  {
-    year: "2023",
-    category: "Cooperative Leaders' Conference",
-    title: "2023 Cooperative Leaders’ Conference",
-    description:
-      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
-    image: pub1,
-  },
-  {
-    year: "2023",
-    category: "Cooperative Festival",
-    title: "2023 Cooperative Festival",
-    description:
-      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
-    image: pub2,
-  },
-  {
-    year: "2022",
-    category: "Cooperative Leaders' Conference",
-    title: "2022 LASCOFED Leaders' Conference",
-    description:
-      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
-    image: pub3,
-  },
-  {
-    year: "2021",
-    category: "Cooperative Leaders' Conference",
-    title: "2021 LASCOFED Leaders' Conference",
-    description:
-      "The conference focused on recovery strategies, digital adoption, and member welfare.",
-    image:  pub4,
+    image: pub4,
   },
 ];
+
+const filters = ["All", "2025", "2024", "2023", "2022", "2021"];
 
 function PublicationCard() {
   const [activeYear, setActiveYear] = useState("All");
@@ -156,7 +158,6 @@ function PublicationCard() {
 
   return (
     <div className="min-h-screen p-6 max-w-7xl mx-auto">
-
       {/* Top Filters */}
       <div className="flex gap-2 mb-10 flex-wrap justify-center">
         {filters.map((filter) => (
@@ -179,48 +180,72 @@ function PublicationCard() {
 
       {/* Content */}
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Left Sidebar */}
+        {/* Left Sidebar - Conditional Rendering */}
         <div className="w-full lg:w-1/4 space-y-4 md:px-10">
-          {categoriesInYear.map((category, index) => (
-            <div
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`cursor-pointer flex items-start gap-3 ${
-                activeCategory === category || (activeCategory === "" && index === 0)
-                  ? "text-red-600"
-                  : "text-gray-400"
-              }`}
-            >
-              <div
-                className={`w-8 h-8 rounded-full p-2 flex items-center justify-center text-white font-semibold ${
-                  activeCategory === category || (activeCategory === "" && index === 0)
-                    ? "bg-red-600"
-                    : "bg-gray-300"
-                }`}
-              >
-                {String(index + 1).padStart(2, "0")}
-              </div>
-              <div>
-                <div className="font-semibold">{category}</div>
-                <div className="text-sm mt-1">
-                  {/* Optional: Add description per category if you want */}
-                  {category === "Cooperative Leaders' Conference" &&
-                    "Bringing leaders together to explore solutions."}
-                  {category === "Cooperative Festival" &&
-                    "A vibrant celebration of unity and diversity."}
+          {activeYear === "All" ? (
+            // This is the "All Publications" section
+            <div className="p-1">
+              <div className="flex items-start gap-4">
+                <div className="flex items-center justify-center py-2 px-3 rounded-full bg-red-600 text-white font-semibold text-lg">
+                  01
+                </div>
+                <div>
+                  <h3 className="text-red-600 font-semibold text-lg">
+                    All Publications
+                  </h3>
+                  <p className="text-gray-600 text-sm mt-1">
+                    Discover highlights from LASCOFED’s key events, conferences
+                    and initiatives.
+                  </p>
                 </div>
               </div>
             </div>
-          ))}
+          ) : (
+            // This is the filter sidebar for a specific year
+            <div>
+              {/* <h3 className="text-xl font-bold mb-4">Filters</h3> */}
+              <div className="space-y-4">
+                {categoriesInYear.map((category, index) => (
+                  <div
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={`cursor-pointer flex items-start gap-3 transition-colors ${
+                      activeCategory === category || (activeCategory === "" && index === 0)
+                        ? "text-red-600"
+                        : "text-gray-400 hover:text-gray-600"
+                    }`}
+                  >
+                    <div
+                      className={`w-8 h-8 rounded-full p-2 flex items-center justify-center text-white font-semibold ${
+                        activeCategory === category || (activeCategory === "" && index === 0)
+                          ? "bg-red-600"
+                          : "bg-gray-300"
+                      }`}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+                    <div>
+                      <div className="font-semibold">{category}</div>
+                      <div className="text-sm mt-1">
+                        {category === "Cooperative Leaders' Conference" &&
+                          "Bringing leaders together to explore solutions."}
+                        {category === "Cooperative Festival" &&
+                          "A vibrant celebration of unity and diversity."}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Cards */}
-        <div className="w-full lg:w-3/4 grid gap-8 grid-cols-1 md:grid-cols-3 md:px-10 ">
+        <div className="w-full lg:w-3/4 grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
           {finalPublications.map((pub, index) => (
             <div
               key={index}
-              className="bg-white overflow-hidden flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-              style={{borderTopLeftRadius: '8px', borderTopRightRadius: '8px'}}
+              className="bg-white rounded-lg overflow-hidden shadow-md flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
               <div className="relative">
                 <img
@@ -229,7 +254,7 @@ function PublicationCard() {
                   className="w-full h-48 object-cover"
                 />
                 <span className="absolute top-2 left-2 bg-red-500 text-white text-[14px] px-3 py-1 rounded-[8px]">
-                  All
+                  {pub.year} {/* Changed from 'All' to pub.year */}
                 </span>
               </div>
               <div className="p-4 flex flex-col flex-grow">

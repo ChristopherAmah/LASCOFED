@@ -2,10 +2,10 @@ import React from 'react'
 import PublicationsBanner from '../components/PublicationsBanner'
 import Radio from '../components/Radio'
 import PublicationCard from '../components/PublicationCard'
-import SubscribeSection from '../components/SusbscribeSection'
+import SubscribeSection from '../components/SubscribeSection'
 import AudioContent from '../components/AudioContent'
 
-const Home = () => {
+const Publications = () => {
   return (
     <>
       <PublicationsBanner />
@@ -17,4 +17,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Publications

@@ -10,6 +10,8 @@ import AboutUs from './pages/AboutUs'
 import Contact from './pages/Contact'
 import OurPortfolio from './pages/OurPortfolio'
 import Publications from './pages/Publications'
+import Training from './pages/Training'
+import RegistrationForm from './pages/RegistrationForm';
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/aboutus" element={<AboutUs />} />
               <Route path="/portfolio" element={<OurPortfolio />} />
+              <Route path="/Training" element={<Training />} />
               <Route path="/publications" element={<Publications />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/register" element={<RegistrationForm />} />
             </Routes>
           <Footer />
         </BrowserRouter>

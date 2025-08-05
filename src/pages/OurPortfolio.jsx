@@ -1,6 +1,6 @@
 import React from 'react'
 import PortfolioBanner from '../components/PortfolioBanner.jsx'
-import SubscribeSection from '../components/SusbscribeSection'
+import SubscribeSection from '../components/SubscribeSection'
 import GallerySection from '../components/GallerySection.jsx'
 
 

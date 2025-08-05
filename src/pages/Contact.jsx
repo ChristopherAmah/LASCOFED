@@ -2,7 +2,7 @@ import React from 'react'
 import MapSection from '../components/MapSection'
 import FaqSection from '../components/FaqSection'
 import ContactBanner from '../components/ContactBanner'
-import SubscribeSection from '../components/SusbscribeSection'
+import SubscribeSection from '../components/SubscribeSection'
 
 
 const Contact = () => {
