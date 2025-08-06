@@ -62,7 +62,7 @@ const FormSteps = ({ currentStep }) => {
 
 
 // Form section: Personal & Contact Information
-const PersonalInfoForm = ({ onNext }) => {
+const PersonalInfoForm = ({ onNext, showBack, onBack }) => {
   return (
     <form className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal & Contact Information</h2>
@@ -290,16 +290,31 @@ const PersonalInfoForm = ({ onNext }) => {
 
       </div>
 
-      {/* Next Button */}
-      <div className="flex justify-end mt-8">
+      {/* Navigation Buttons + Help Link */}
+      <div className="mt-8 flex items-center justify-between md:px-10">
+        <button
+          type="button"
+          onClick={onBack}
+          disabled={!showBack}
+          className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm ${
+            showBack ? 'bg-gray-600 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          <LuChevronLeft className="mr-2 h-5 w-5" />
+          Back
+        </button>
         <button
           type="button"
           onClick={onNext}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
         >
           Next
           <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />
         </button>
+      </div>
+
+      <div className="text-center mt-4 text-gray-600 text-sm">
+        Stuck on the form? <a href="#" className="text-red-600 hover:underline">Let's call you!</a>
       </div>
     </form>
   );
@@ -334,15 +349,10 @@ const EducationInfoForm = ({ onPrevious }) => {
 const App = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  const renderFormStep = () => {
-    switch (currentStep) {
-      case 0:
-        return <PersonalInfoForm onNext={() => setCurrentStep(1)} />;
-      case 1:
-        return <EducationInfoForm onPrevious={() => setCurrentStep(0)} />;
-      default:
-        return null;
-    }
+  const renderForm = () => {
+    return currentStep === 0 ?
+      <PersonalInfoForm onNext={() => setCurrentStep(1)} onBack={() => setCurrentStep(0)} showBack={false} /> :
+      <EducationInfoForm onPrevious={() => setCurrentStep(0)} />;
   };
 
   return (
@@ -357,7 +367,7 @@ const App = () => {
         </h2>
         <FormSteps currentStep={currentStep} />
         <div className="mt-8">
-          {renderFormStep()}
+          {renderForm()}
         </div>
       </div>
     </div>

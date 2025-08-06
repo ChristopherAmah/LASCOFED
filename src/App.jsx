@@ -11,7 +11,7 @@ import Contact from './pages/Contact'
 import OurPortfolio from './pages/OurPortfolio'
 import Publications from './pages/Publications'
 import Training from './pages/Training'
-import RegistrationForm from './pages/RegistrationForm';
+import MultiStepForm from './components/MultiStepForm';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
               <Route path="/Training" element={<Training />} />
               <Route path="/publications" element={<Publications />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/register" element={<RegistrationForm />} />
+              <Route path="/register" element={<MultiStepForm />} />
             </Routes>
           <Footer />
         </BrowserRouter>
