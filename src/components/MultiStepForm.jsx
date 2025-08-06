@@ -1,4 +1,3 @@
-// MultiStepForm.jsx
 import React, { useState } from 'react';
 import logo from '../assets/logo.png';
 import FormSteps from './FormSteps';
@@ -8,7 +7,7 @@ import EducationInfoForm from './EducationInfoForm';
 const Logo = () => (
   <div className="flex justify-center items-center h-30 w-30 mx-auto">
     <img
-      src = {logo}
+      src={logo}
       alt="LASCOFED Logo"
       className="h-full w-full object-contain"
     />
@@ -18,22 +17,34 @@ const Logo = () => (
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
+  // ✅ Define next and previous step functions
+  const nextStep = () => {
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+
+  const prevStep = () => {
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
+  };
+
+  // ✅ Handle which form step to render
   const renderForm = () => {
     switch (currentStep) {
       case 0:
         return (
           <PersonalInfoForm
-            onNext={() => setCurrentStep(1)}
+            onNext={nextStep}
             showBack={false}
           />
         );
       case 1:
         return (
           <EducationInfoForm
-            onPrevious={() => setCurrentStep(0)}
+            onNext={nextStep}
+            onBack={prevStep}
+            showBack={true}
           />
         );
-      // Add more cases for next steps
+      // Add more cases for future steps
       default:
         return null;
     }
@@ -49,7 +60,11 @@ const MultiStepForm = () => {
         <h2 className="text-center text-2xl md:text-2xl font-bold text-green-700 mt-4 py-5">
           APPLICATION FORM
         </h2>
+
+        {/* Step Progress Header */}
         <FormSteps currentStep={currentStep} />
+
+        {/* Active Step Component */}
         <div className="mt-8">
           {renderForm()}
         </div>
