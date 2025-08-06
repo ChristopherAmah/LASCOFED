@@ -260,7 +260,7 @@ const PersonalInfoForm = ({ onNext }) => {
       </div>
 
       {/* Upload Passport */}
-      <div className='px-4 md:px-12'>
+      <div className='md:px-12'>
         <div className="w-full mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 px-4 md:px-20 text-center flex flex-col items-center justify-center gap-4">
           
           <img src={uploadlogo} alt="" />
