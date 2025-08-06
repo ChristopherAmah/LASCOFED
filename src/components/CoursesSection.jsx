@@ -25,46 +25,46 @@ const courses = [
     description: 'Explore best practices in cooperative governance and enhance organizational decision-making.',
     category: 'Cooperative Management'
   },
-  {
-    image: training,
-    title: 'Leadership & Team Building',
-    date: 'May 10, 2024',
-    duration: '5 Days',
-    authorName: 'Linda Ijeoma',
-    authorTitle: 'Leadership Coach',
-    description: 'Develop leadership skills to manage teams and drive organizational growth.',
-    category: 'Leadership & Skills'
-  },
-  {
-    image: training,
-    title: 'ICT Tools for Cooperative Efficiency',
-    date: 'Jun 5, 2024',
-    duration: '10 Days',
-    authorName: 'Tunde Lawal',
-    authorTitle: 'ICT Consultant',
-    description: 'Discover how digital tools can transform your cooperative’s efficiency and communication.',
-    category: 'ICT & Digital Tools'
-  },
-  {
-    image: training,
-    title: 'Advanced Financial Strategies',
-    date: 'Jul 20, 2024',
-    duration: '8 Days',
-    authorName: 'Aisha Bello',
-    authorTitle: 'Finance Expert',
-    description: 'Master advanced financial planning strategies tailored for cooperatives.',
-    category: 'Financial Literacy'
-  },
-  {
-    image: training,
-    title: 'Advanced Financial Strategies',
-    date: 'Jul 20, 2024',
-    duration: '8 Days',
-    authorName: 'Aisha Bello',
-    authorTitle: 'Finance Expert',
-    description: 'Master advanced financial planning strategies tailored for cooperatives.',
-    category: 'Financial Literacy'
-  },
+  // {
+  //   image: training,
+  //   title: 'Leadership & Team Building',
+  //   date: 'May 10, 2024',
+  //   duration: '5 Days',
+  //   authorName: 'Linda Ijeoma',
+  //   authorTitle: 'Leadership Coach',
+  //   description: 'Develop leadership skills to manage teams and drive organizational growth.',
+  //   category: 'Leadership & Skills'
+  // },
+  // {
+  //   image: training,
+  //   title: 'ICT Tools for Cooperative Efficiency',
+  //   date: 'Jun 5, 2024',
+  //   duration: '10 Days',
+  //   authorName: 'Tunde Lawal',
+  //   authorTitle: 'ICT Consultant',
+  //   description: 'Discover how digital tools can transform your cooperative’s efficiency and communication.',
+  //   category: 'ICT & Digital Tools'
+  // },
+  // {
+  //   image: training,
+  //   title: 'Advanced Financial Strategies',
+  //   date: 'Jul 20, 2024',
+  //   duration: '8 Days',
+  //   authorName: 'Aisha Bello',
+  //   authorTitle: 'Finance Expert',
+  //   description: 'Master advanced financial planning strategies tailored for cooperatives.',
+  //   category: 'Financial Literacy'
+  // },
+  // {
+  //   image: training,
+  //   title: 'Advanced Financial Strategies',
+  //   date: 'Jul 20, 2024',
+  //   duration: '8 Days',
+  //   authorName: 'Aisha Bello',
+  //   authorTitle: 'Finance Expert',
+  //   description: 'Master advanced financial planning strategies tailored for cooperatives.',
+  //   category: 'Financial Literacy'
+  // },
 ];
 
 // Reusable Course Card component
@@ -161,7 +161,9 @@ const CoursesSection = () => {
         </div>
 
         {/* Grid of Courses */}
-        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+        <div className={`grid gap-8 grid-cols-1 md:grid-cols-2 ${
+            courses.length <= 2 ? 'lg:grid-cols-2 justify-center' : 'lg:grid-cols-3'
+          } auto-rows-fr`}>
           {filteredCourses.map((course, index) => (
             <CourseCard
               key={index}
