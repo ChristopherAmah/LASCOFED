@@ -261,7 +261,7 @@ const PersonalInfoForm = ({ onNext }) => {
 
       {/* Upload Passport */}
       <div className='md:px-13'>
-        <div className="relative mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 px-20 text-center flex flex-col items-center justify-center gap-6">
+        <div className="relative mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 md:px-20 text-center flex flex-col items-center justify-center md:gap-6">
           <img src={uploadlogo} alt="" />
         <label htmlFor="passport">
           Upload Your Passport * <br />
@@ -271,7 +271,7 @@ const PersonalInfoForm = ({ onNext }) => {
           type="file"
           id="passport"
           accept="image/*"
-          className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100"
+          className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 mx-auto justify-center items-center"
         />
       </div>
       </div>
