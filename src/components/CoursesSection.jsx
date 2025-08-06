@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 const courses = [
   {
     image: training,
-    title: 'Financial Management for Cooperatives',
+    title: 'Cooperative Drivers Training',
     date: 'Mar 15, 2024',
     duration: '12 Days',
     authorName: 'Sarah Adebayo',
     authorTitle: 'Financial Advisor',
-    description: 'Learn essential financial management skills for cooperative societies and enhance your leadership capabilities.',
+    description: 'Learn essential driving skills for cooperative societies and enhance your driving capabilities.',
     category: 'Financial Literacy'
   },
   {
@@ -68,7 +68,7 @@ const courses = [
 ];
 
 // Reusable Course Card component
-const CourseCard = ({ course }) => (
+const CourseCard = ({ course, isActive }) => (
   <div className="flex flex-col bg-white rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 h-full hover:shadow-xl">
     <img
       src={course.image}
@@ -100,16 +100,26 @@ const CourseCard = ({ course }) => (
       </div>
       <p className="text-gray-600 text-sm mb-6 leading-relaxed flex-grow">{course.description}</p>
       <div className="mt-auto">
-        <Link
-          to="/register"
-          className="block text-center bg-red-500 hover:bg-red-600 text-white text-[14px] font-sans py-3 px-4 rounded-[8px] transition-colors duration-300"
-        >
-          Register Now
-        </Link>
+        {isActive ? (
+          <Link
+            to="/register"
+            className="block text-center bg-red-500 hover:bg-red-600 text-white text-[14px] font-sans py-3 px-4 rounded-[8px] transition-colors duration-300"
+          >
+            Register Now
+          </Link>
+        ) : (
+          <button
+            disabled
+            className="block w-full text-center bg-gray-300 text-white text-[14px] font-sans py-3 px-4 rounded-[8px] opacity-50 cursor-not-allowed"
+          >
+            Register Unavailable
+          </button>
+        )}
       </div>
     </div>
   </div>
 );
+
 
 // Main Courses Section
 const CoursesSection = () => {
@@ -153,9 +163,14 @@ const CoursesSection = () => {
         {/* Grid of Courses */}
         <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
           {filteredCourses.map((course, index) => (
-            <CourseCard key={index} course={course} />
+            <CourseCard
+              key={index}
+              course={course}
+              isActive={index < 2} 
+            />
           ))}
         </div>
+
       </div>
     </section>
   );
