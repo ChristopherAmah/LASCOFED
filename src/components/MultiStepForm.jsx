@@ -3,6 +3,9 @@ import logo from '../assets/logo.png';
 import FormSteps from './FormSteps';
 import PersonalInfoForm from './PersonalInfoForm';
 import EducationInfoForm from './EducationInfoForm';
+import EmploymentForm from './EmploymentForm';
+import DeclarationForm from './DeclarationForm';
+import SponsorForm from './SponsorForm';
 
 const Logo = () => (
   <div className="flex justify-center items-center h-30 w-30 mx-auto">
@@ -39,6 +42,30 @@ const MultiStepForm = () => {
       case 1:
         return (
           <EducationInfoForm
+            onNext={nextStep}
+            onBack={prevStep}
+            showBack={true}
+          />
+        );
+      case 2:
+        return (
+          <EmploymentForm
+            onNext={nextStep}
+            onBack={prevStep}
+            showBack={true}
+          />
+        );
+      case 3:
+        return (
+          <DeclarationForm
+            onNext={nextStep}
+            onBack={prevStep}
+            showBack={true}
+          />
+        );
+      case 4:
+        return (
+          <SponsorForm
             onNext={nextStep}
             onBack={prevStep}
             showBack={true}

@@ -1,5 +1,6 @@
 // src/components/EventSection.jsx
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import building from '../assets/building.png'; 
 import event1 from '../assets/event1.png'; 
 import ev2 from '../assets/ev2.png'; 
@@ -203,6 +204,7 @@ const EventSection = () => {
                   backgroundRepeat: 'no-repeat'   // Prevent image repetition
                 }}
               >
+                <Link to="/portfolio">
                 {/* Gradient Overlay - no z-index needed if it's the first child, or a lower one like z-0 */}
                 <div className="absolute inset-0 bg-black/30 z-0"> {/* Changed z-10 to z-0 or simply remove z-index */}
                     {/* The two gradients: from left to right, and from top to bottom */}
@@ -216,6 +218,7 @@ const EventSection = () => {
                   <p className="text-sm">{event.date}</p>
                   <p className="text-sm">{event.location}</p> {/* Added location here */}
                 </div>
+              </Link>
               </div>
             ))
           ) : (
