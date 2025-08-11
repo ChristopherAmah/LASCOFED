@@ -161,17 +161,22 @@ const CoursesSection = () => {
         </div>
 
         {/* Grid of Courses */}
-        <div className={`grid gap-8 grid-cols-1 md:grid-cols-2 ${
-            courses.length <= 2 ? 'lg:grid-cols-2 justify-center' : 'lg:grid-cols-3'
-          } auto-rows-fr`}>
-          {filteredCourses.map((course, index) => (
-            <CourseCard
-              key={index}
-              course={course}
-              isActive={index < 2} 
-            />
-          ))}
+        <div className="w-full flex justify-center">
+          <div
+            className={`grid gap-8 grid-cols-1 md:grid-cols-2 ${
+              courses.length <= 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
+            } auto-rows-fr md:w-3/4 justify-items-center`}
+          >
+            {filteredCourses.map((course, index) => (
+              <CourseCard
+                key={index}
+                course={course}
+                isActive={index < 2}
+              />
+            ))}
+          </div>
         </div>
+
 
       </div>
     </section>

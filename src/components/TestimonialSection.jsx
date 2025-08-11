@@ -1,6 +1,7 @@
 import React from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import { Navigation } from 'swiper/modules';
+import testimonial from '../assets/testimonial.jpg'; // Replace with your actual image path
 
 //Import Swiper styles
 import 'swiper/css'
@@ -17,7 +18,7 @@ const testimonials = [
     id: 1,
     name: 'Mrs. Adunni Oyewole',
     role: 'President, Evergreen Agro Cooperative Society',
-    image: 'https://randomuser.me/api/portraits/women/77.jpg',
+    image: testimonial,
     text: 'LASCOFED\'s training transformed our structure. We\'ve grown stronger and more organized',
     rating: 4, // Example rating
   },
@@ -25,7 +26,7 @@ const testimonials = [
     id: 2,
     name: 'Mr. Emeka Okoro',
     role: 'General Secretary, Creative Hands Youth Cooperative',
-    image: 'https://randomuser.me/api/portraits/men/90.jpg',
+    image: testimonial,
     text: 'With LASCOFED\'s support, we became fully compliant and more efficient.',
     rating: 5,
   },
@@ -33,7 +34,7 @@ const testimonials = [
     id: 3,
     name: 'Mrs. Bisi Adeniran',
     role: 'Vice President, Lagos Textile Cooperative Union',
-    image: 'https://randomuser.me/api/portraits/women/90.jpg',
+    image: testimonial,
     text: 'We got legal help, exposure, and mentorship. LASCOFED truly supports young co-ops',
     rating: 4,
   },
@@ -41,7 +42,7 @@ const testimonials = [
     id: 4,
     name: 'Sarah Johnson',
     role: 'Member, Tech Innovators Co-op',
-    image: 'https://randomuser.me/api/portraits/women/45.jpg',
+    image: testimonial,
     text: 'The customer service has been exceptional. They went above and beyond to help me solve my problems and were always available when I needed them.',
     rating: 5,
   },
@@ -49,7 +50,7 @@ const testimonials = [
     id: 5,
     name: 'Michael Chen',
     role: 'Treasurer, Green Farmers Collective',
-    image: 'https://randomuser.me/api/portraits/men/32.jpg',
+    image: testimonial,
     text: 'I\'ve been using their services for over a year now and couldn\'t be happier. The platform is intuitive and the features are exactly what I needed for my business.',
     rating: 4,
   },
@@ -57,7 +58,7 @@ const testimonials = [
     id: 6,
     name: 'Emma Wilson',
     role: 'Secretary, Artisans Guild',
-    image: 'https://randomuser.me/api/portraits/women/28.jpg',
+    image: testimonial,
     text: 'What impressed me most was how quickly they responded to my requests. The team is professional, knowledgeable, and truly cares about their customers\' success.',
     rating: 5,
   },

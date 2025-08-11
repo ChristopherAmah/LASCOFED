@@ -1,5 +1,6 @@
 import React from 'react';
-import building from "../assets/building.png"; // Assuming this is for your images
+import youth1 from "../assets/youth1.jpg"; // Assuming this is for your images
+import youth2 from "../assets/youth2.jpg"; // Assuming this is for your images
  // Assuming you'll have a different image for the right column
 
 
@@ -21,7 +22,7 @@ const EmpowermentSection = () => {
             {/* Image Container */}
             <div className="rounded-lg overflow-hidden shadow-lg mb-8">
               <img
-                src={building} // Replace with the actual URL of your first image
+                src={youth1} // Replace with the actual URL of your first image
                 alt="People participating in a cooperative meeting"
                 className="w-full h-auto object-cover"
               />
@@ -38,7 +39,7 @@ const EmpowermentSection = () => {
             {/* Image Container */}
             <div className="rounded-lg overflow-hidden shadow-lg mb-8">
               <img
-                src={building} // Ensure you have a different image for the right column for clarity
+                src={youth2} // Ensure you have a different image for the right column for clarity
                 alt="People at an event related to cooperative development"
                 className="w-full h-auto object-cover"
               />

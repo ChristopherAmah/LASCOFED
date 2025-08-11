@@ -12,16 +12,19 @@ import {
 } from 'react-icons/fa'; // Assuming FaTwitter is used for the X icon for now, or ensure FaXTwitter from 'react-icons/fa6' is imported if available
 
 import logo from '../assets/logo.png';
+import cooplogo from '../assets/cooplogo.png';
+import alliance from '../assets/alliance.png';
 import coopa from '../assets/coopa.png';
+import coop from '../assets/coop.png';
 import cfn from '../assets/cfn.png';
 
 const Footer = () => {
   return (
     <footer className="bg-[#101010] text-gray-700 px-6 md:px-10 py-16 border-t border-gray-800 font-sans">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr] gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_2fr] gap-10">
         {/* Logo & About */}
         <div>
-          <img src={logo} alt="LASCOFED Logo" className="h-14 mb-4" />
+          <img src={cooplogo} alt="LASCOFED Logo" className="h-14 mb-4" style={{marginLeft: '-15px'}}/>
           <p className="text-[#A4A4A4] mb-10" style={{lineHeight: '2.5', fontWeight: '400', fontSize: '15px'}}>
             Lagos State Cooperative Federation Ltd. (LASCOFED) is the apex body uniting, representing,
             and serving registered cooperative societies in Lagos State.
@@ -55,9 +58,9 @@ const Footer = () => {
         {/* Contact Information + Social + Logos */}
         <div>
           <h4 className="text-white text-lg font-semibold mb-4">Contact Information</h4> {/* Added heading */}
-          <div className="mb-4 space-y-3 text-[#A4A4A4]" style={{fontSize: '12px'}}>
+          <div className="mb-4 space-y-3 text-[#A4A4A4]" style={{fontSize: '16px'}}>
             <div className="flex items-start gap-2">
-              <FaMapMarkerAlt className="mt-1 text-white w-8 h-10" />
+              <FaMapMarkerAlt className="mt-1 text-white w-5 h-8" />
               <span>Plot 13, Isaacstan Close, Off Wempco Road, Ojodu, Ogba, Lagos, Nigeria</span>
             </div>
             <div className="flex items-center gap-2">
@@ -82,9 +85,9 @@ const Footer = () => {
           </div>
 
           {/* Logos */}
-          <div className="flex gap-4 items-center mt-4">
-            <img src={cfn} alt="Co-operative Federation of Nigeria Logo" className="h-14 sm:h-16 object-contain" />
-            <img src={coopa} alt="International Cooperative Alliance Logo" className="h-14 sm:h-16 object-contain" />
+          <div className="flex items-center mt-4 gap-2" style={{marginLeft: '-15px'}}>
+            <img src={coop} alt="Co-operative Federation of Nigeria Logo" className="h-14 sm:h-30 object-contain"/>
+            <img src={alliance} alt="International Cooperative Alliance Logo" className="h-14 sm:h-16 object-contain" />
           </div>
         </div>
       </div>

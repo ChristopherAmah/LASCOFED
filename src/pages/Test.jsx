@@ -1,303 +1,159 @@
 import React, { useState } from 'react';
-import { LuChevronRight, LuChevronLeft } from 'react-icons/lu';
-import logo from '../assets/logo.png';
+import {
+  LuChevronRight,
+  LuChevronLeft,
+  LuCirclePlus,
+  LuPencil,
+  LuSave,
+  LuX,
+  LuTrash2,
+  LuGripVertical,
+} from 'react-icons/lu';
 import uploadlogo from '../assets/uploadlogo.png';
 
+const EducationInfoForm = ({ onNext, onBack, showBack }) => {
+  const [academicHistory, setAcademicHistory] = useState([
+    { institution: '', certificate: '', year: '', areaOfStudy: '' },
+    { institution: '', certificate: '', year: '', areaOfStudy: '' },
+  ]);
 
-// Placeholder logo component
-const Logo = () => (
-  <div className="flex justify-center items-center h-30 w-30 mx-auto">
-    <img
-      src = {logo}
-      alt="LASCOFED Logo"
-      className="h-full w-full object-contain"
-    />
-  </div>
-);
+  const [professionalCerts, setProfessionalCerts] = useState([
+    { awardingBody: '', certificate: '', year: '' },
+    { awardingBody: '', certificate: '', year: '' },
+  ]);
 
-// Form step navigation component
-const FormSteps = ({ currentStep }) => {
-  const steps = [
-    "Personal & Contact Information",
-    "Education, Certification & Experience",
-    "Employment & Motivation",
-    "Declaration",
-    "Sponsor Information",
-  ];
+  const [editMode, setEditMode] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedCertRows, setSelectedCertRows] = useState([]);
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
+
+  /** Academic Handlers **/
+  const handleAddAcademicEntry = () => {
+    setAcademicHistory([...academicHistory, { institution: '', certificate: '', year: '', areaOfStudy: '' }]);
+  };
+  const handleAcademicInputChange = (index, e) => {
+    const { name, value } = e.target;
+    const list = [...academicHistory];
+    list[index][name] = value;
+    setAcademicHistory(list);
+  };
+  const handleAcademicCheckboxToggle = (index) => {
+    setSelectedRows(selectedRows.includes(index) ? selectedRows.filter(i => i !== index) : [...selectedRows, index]);
+  };
+  const handleDeleteSelectedAcademic = () => {
+    setAcademicHistory(academicHistory.filter((_, idx) => !selectedRows.includes(idx)));
+    setSelectedRows([]);
+  };
+
+  /** Professional Certification Handlers **/
+  const handleAddCertEntry = () => {
+    setProfessionalCerts([...professionalCerts, { awardingBody: '', certificate: '', year: '' }]);
+  };
+  const handleCertInputChange = (index, e) => {
+    const { name, value } = e.target;
+    const list = [...professionalCerts];
+    list[index][name] = value;
+    setProfessionalCerts(list);
+  };
+  const handleCertCheckboxToggle = (index) => {
+    setSelectedCertRows(selectedCertRows.includes(index) ? selectedCertRows.filter(i => i !== index) : [...selectedCertRows, index]);
+  };
+  const handleDeleteSelectedCert = () => {
+    setProfessionalCerts(professionalCerts.filter((_, idx) => !selectedCertRows.includes(idx)));
+    setSelectedCertRows([]);
+  };
+
+  /** General Save/Cancel **/
+  const handleSave = () => {
+    setEditMode(false);
+    setSelectedRows([]);
+    setSelectedCertRows([]);
+  };
+  const handleCancel = () => {
+    setEditMode(false);
+    setSelectedRows([]);
+    setSelectedCertRows([]);
+  };
 
   return (
-    <div className="my-8 w-full max-w-5xl mx-auto">
-      <div className="grid grid-cols-5 gap-2 items-center text-center">
-        {steps.map((step, index) => (
-          <div key={index} className="flex flex-col items-center w-full">
-            {/* Step Title */}
-            <span
-              className={`block text-xs sm:text-sm md:text-sm font-medium h-20 overflow-hidden leading-tight
-                ${index === currentStep ? 'text-gray-800' : 'text-gray-400'}
-              `}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                padding: '0 4px',
-              }}
-            >
-              {step}
-            </span>
+    <form className="max-w-4xl mx-auto p-4 sm:p-6 bg-white shadow-md rounded-md space-y-10">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+        Education, Certification & Experience
+      </h2>
 
-            {/* Step Progress Bar */}
-            <div
-              className={`mt-2 h-1 w-full rounded-full transition-colors duration-300
-                ${index === currentStep ? 'bg-red-600' : 'bg-gray-300'}
-              `}
-            />
-          </div>
+      {/* ================= ACADEMIC HISTORY ================= */}
+      <div className="px-2 sm:px-5">
+        <SectionHeader
+          title="Academic History"
+          editMode={editMode}
+          onAdd={handleAddAcademicEntry}
+          onEdit={() => setEditMode(true)}
+          onDelete={handleDeleteSelectedAcademic}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
+
+        {academicHistory.map((entry, index) => (
+          <EntryRow
+            key={index}
+            index={index}
+            editMode={editMode}
+            selected={selectedRows.includes(index)}
+            onSelect={() => handleAcademicCheckboxToggle(index)}
+            fields={[
+              { label: 'Institution *', name: 'institution', type: 'text', value: entry.institution, onChange: (e) => handleAcademicInputChange(index, e), placeholder: 'Enter name of institution' },
+              { label: 'Certificate Earned *', name: 'certificate', type: 'text', value: entry.certificate, onChange: (e) => handleAcademicInputChange(index, e), placeholder: 'Enter certificate earned' },
+              { label: 'Year Conferred *', name: 'year', type: 'select', value: entry.year, onChange: (e) => handleAcademicInputChange(index, e), options: years },
+              { label: 'Area of Study *', name: 'areaOfStudy', type: 'text', value: entry.areaOfStudy, onChange: (e) => handleAcademicInputChange(index, e), placeholder: 'Enter area of study' },
+            ]}
+          />
         ))}
-      </div>
-    </div>
-  );
-};
 
-
-
-// Form section: Personal & Contact Information
-const PersonalInfoForm = ({ onNext, showBack, onBack }) => {
-  return (
-    <form className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal & Contact Information</h2>
-      <div className="md:px-5">
-        <h3 className="text-lg font-semibold text-gray-800">Basic Details</h3>
-
-      {/* First row: First, Middle, Last Name */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-        {/* First Name */}
-        <div className="relative">
-          <label htmlFor="firstName" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            First Name *
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            placeholder="John"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Middle Name */}
-        <div className="relative">
-          <label htmlFor="middleName" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Middle Name *
-          </label>
-          <input
-            type="text"
-            id="middleName"
-            placeholder="Isaac"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Last Name */}
-        <div className="relative">
-          <label htmlFor="lastName" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Last Name *
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            placeholder="Doe"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
+        <UploadBox label="Upload photocopies of result(s) or certificate(s)" />
       </div>
 
-      {/* 2-column layout starts here */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        {/* Date of Birth */}
-        <div className="relative">
-          <label htmlFor="dob" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Date of Birth *
-          </label>
-          <input
-            type="date"
-            id="dob"
-            placeholder='_/_/__'
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Gender */}
-        <div className="relative">
-          <label htmlFor="gender" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Gender *
-          </label>
-          <select
-            id="gender"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-
-
-        {/* City of Birth */}
-        <div className="relative">
-          <label htmlFor="cityOfBirth" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            City of Birth *
-          </label>
-          <input
-            type="text"
-            id="cityOfBirth"
-            placeholder="Ikeja"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* State of Birth */}
-        <div className="relative">
-          <label htmlFor="stateOfBirth" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            State of Birth *
-          </label>
-          <input
-            type="text"
-            id="stateOfBirth"
-            placeholder="Lagos State"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Nationality */}
-        <div className="relative">
-          <label htmlFor="nationality" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Nationality *
-          </label>
-          <input
-            type="text"
-            id="nationality"
-            placeholder="Nigerian"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Marital Status */}
-        <div className="relative">
-          <label htmlFor="maritalStatus" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Marital Status *
-          </label>
-          <select
-            id="maritalStatus"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="">Select</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
-            <option value="widowed">Widowed</option>
-          </select>
-        </div>
-      </div>
-      </div>
-
-      <div className='md:px-5'>
-        {/* ========== Contact Details ========== */}
-      <h3 className="text-lg font-semibold text-gray-800 mt-10">Contact Details</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-        {/* Email Address */}
-        <div className="relative">
-          <label htmlFor="email" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Email Address *
-          </label>
-          <input
-            type="email"
-            id="email"
-            placeholder="john@example.com"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Phone Number */}
-        <div className="relative">
-          <label htmlFor="phone" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Phone Number *
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            placeholder="+1234567890"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-      </div>
-
-      {/* Permanent Address */}
-      <div className="relative mt-6">
-        <label htmlFor="permanentAddress" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-          Permanent Address *
-        </label>
-        <input
-          type="text"
-          id="permanentAddress"
-          placeholder="1234 Main St, City, State"
-          className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+      {/* ================= PROFESSIONAL CERTIFICATION ================= */}
+      <div className="px-2 sm:px-5">
+        <SectionHeader
+          title="Professional Certification"
+          editMode={editMode}
+          onAdd={handleAddCertEntry}
+          onEdit={() => setEditMode(true)}
+          onDelete={handleDeleteSelectedCert}
+          onSave={handleSave}
+          onCancel={handleCancel}
         />
-      </div>
 
-      {/* Postal Address */}
-      <div className="relative mt-6">
-        <label htmlFor="postalAddress" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-          Postal Address *
-        </label>
-        <input
-          type="text"
-          id="postalAddress"
-          placeholder="P.O. Box 5678, City, State"
-          className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
-      </div>
-
-      {/* Upload Passport */}
-      <div className='md:px-12'>
-        <div className="w-full mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 px-4 md:px-20 text-center flex flex-col items-center justify-center gap-4">
-          
-          <img src={uploadlogo} alt="" />
-
-          <label htmlFor="passport" className="text-sm font-medium">
-            Upload Your Passport * <br />
-            <span className='text-[12px]' style={{ color: '#7D7D7D' }}>
-              JPEG, PNG, and PDF formats, up to 50MB
-            </span>
-          </label>
-
-          <input
-            type="file"
-            id="passport"
-            accept="image/*"
-            className="text-sm text-gray-500 
-                      file:mr-4 file:py-2 file:px-4 
-                      file:rounded-md file:border-0 
-                      file:text-sm file:font-semibold 
-                      file:bg-red-50 file:text-red-700 
-                      hover:file:bg-red-100"
+        {professionalCerts.map((entry, index) => (
+          <EntryRow
+            key={index}
+            index={index}
+            editMode={editMode}
+            selected={selectedCertRows.includes(index)}
+            onSelect={() => handleCertCheckboxToggle(index)}
+            fields={[
+              { label: 'Awarding Body *', name: 'awardingBody', type: 'text', value: entry.awardingBody, onChange: (e) => handleCertInputChange(index, e), placeholder: 'Enter awarding body' },
+              { label: 'Certificate *', name: 'certificate', type: 'text', value: entry.certificate, onChange: (e) => handleCertInputChange(index, e), placeholder: 'Enter certificate' },
+              { label: 'Year Conferred *', name: 'year', type: 'select', value: entry.year, onChange: (e) => handleCertInputChange(index, e), options: years },
+            ]}
           />
+        ))}
 
-        </div>
+        <UploadBox label="Upload photocopies of certificate(s)" />
       </div>
 
-
-      </div>
-
-      {/* Navigation Buttons + Help Link */}
+      {/* Navigation */}
       <div className="mt-8 flex items-center justify-between md:px-10">
         <button
           type="button"
           onClick={onBack}
           disabled={!showBack}
           className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm ${
-            showBack ? 'bg-gray-600 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            showBack
+              ? 'bg-gray-600 text-white hover:bg-gray-700'
+              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >
           <LuChevronLeft className="mr-2 h-5 w-5" />
@@ -306,72 +162,118 @@ const PersonalInfoForm = ({ onNext, showBack, onBack }) => {
         <button
           type="button"
           onClick={onNext}
-          className="inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700"
         >
           Next
           <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />
         </button>
       </div>
-
-      <div className="text-center mt-4 text-gray-600 text-sm">
-        Stuck on the form? <a href="#" className="text-red-600 hover:underline">Let's call you!</a>
-      </div>
     </form>
   );
 };
 
+/** ============== REUSABLE COMPONENTS ============== **/
 
-
-// Form section: Education, Certification & Experience
-const EducationInfoForm = ({ onPrevious }) => {
-  return (
-    <div className="space-y-6">
-      <h3 className="text-2xl md:text-3xl font-bold text-gray-800">
-        Education, Certification & Experience
-      </h3>
-      <p className="text-gray-600">
-        This is a placeholder for the next section of your form. Please provide the details of this section, and I will generate the code for you.
-      </p>
-      <div className="flex justify-between">
-        <button
-          type="button"
-          onClick={onPrevious}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-        >
-          <LuChevronLeft className="mr-2 -ml-1 h-5 w-5" />
-          Previous
-        </button>
-      </div>
+const SectionHeader = ({ title, editMode, onAdd, onEdit, onDelete, onSave, onCancel }) => (
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+    <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+    <div className="flex flex-wrap gap-2">
+      {!editMode ? (
+        <>
+          <button onClick={onAdd} type="button" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700">
+            <LuCirclePlus className="mr-2 h-4 w-4" /> Add
+          </button>
+          <button onClick={onEdit} type="button" className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
+            <LuPencil className="mr-2 h-4 w-4" /> Edit
+          </button>
+        </>
+      ) : (
+        <>
+          <button onClick={onDelete} type="button" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-500 hover:bg-red-600">
+            <LuTrash2 className="mr-2 h-4 w-4" /> Delete
+          </button>
+          <button onClick={onSave} type="button" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+            <LuSave className="mr-2 h-4 w-4" /> Save
+          </button>
+          <button onClick={onCancel} type="button" className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
+            <LuX className="mr-2 h-4 w-4" /> Cancel
+          </button>
+        </>
+      )}
     </div>
-  );
-};
+  </div>
+);
 
-const App = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-
-  const renderForm = () => {
-    return currentStep === 0 ?
-      <PersonalInfoForm onNext={() => setCurrentStep(1)} onBack={() => setCurrentStep(0)} showBack={false} /> :
-      <EducationInfoForm onPrevious={() => setCurrentStep(0)} />;
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-100 p-4 font-sans">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
-        <Logo />
-        <h1 className="text-center text-xl md:text-2xl font-bold text-green-700 mt-4">
-          LASCOFED TRAINING AND DEVELOPMENT CENTRE
-        </h1>
-        <h2 className="text-center text-2xl md:text-2xl font-bold text-green-700 mt-4 py-5">
-          APPLICATION FORM
-        </h2>
-        <FormSteps currentStep={currentStep} />
-        <div className="mt-8">
-          {renderForm()}
+const EntryRow = ({ editMode, selected, onSelect, index, fields }) => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4 pb-4 mb-4">
+    {editMode && (
+      <div className="col-span-full flex justify-between items-center mb-2">
+        <div className="flex items-center gap-2">
+          <input type="checkbox" checked={selected} onChange={onSelect} className="h-4 w-4 text-red-600" />
+          <span className="text-sm text-gray-700">Select</span>
+        </div>
+        <div className="text-gray-500 cursor-grab">
+          <LuGripVertical />
         </div>
       </div>
-    </div>
-  );
-};
+    )}
+    {fields.map((field, i) => (
+      <div key={i} className="relative">
+        <label className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-2 -top-2.5 left-2 z-10">
+          {field.label}
+        </label>
+        {field.type === 'select' ? (
+          <select
+            name={field.name}
+            value={field.value}
+            onChange={field.onChange}
+            className="pt-5 pb-2 px-2 w-full border text-sm border-gray-300 text-gray-600 rounded-md bg-white"
+          >
+            <option value="">Select Year</option>
+            {field.options.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            type={field.type}
+            name={field.name}
+            value={field.value}
+            onChange={field.onChange}
+            placeholder={field.placeholder}
+            className="pt-5 pb-2 px-2 w-full border text-sm border-gray-300 rounded-md"
+          />
+        )}
+      </div>
+    ))}
+  </div>
+);
 
-export default App;
+const UploadBox = ({ label }) => (
+  <div className="mt-6 px-2 sm:px-12">
+    <div className="w-full border border-dashed border-[#D8DAEB] rounded-[12px] py-10 px-4 sm:px-10 text-center flex flex-col items-center justify-center gap-4">
+      <img src={uploadlogo} alt="Upload" className="w-16 h-16" />
+      <label className="text-sm font-medium text-gray-700">
+        {label}
+        <br />
+        <span className="text-[12px] text-gray-500">
+          JPEG, PNG, and PDF formats, up to 50MB
+        </span>
+      </label>
+      <input
+        type="file"
+        accept="image/*"
+        className="text-sm text-gray-500 
+          file:mr-4 file:py-2 file:px-4 
+          file:rounded-md file:border-0 
+          file:text-sm file:font-semibold 
+          file:bg-red-50 file:text-red-700 
+          hover:file:bg-red-100"
+      />
+    </div>
+  </div>
+);
+
+export default EducationInfoForm;
