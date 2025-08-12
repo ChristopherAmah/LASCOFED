@@ -109,7 +109,7 @@ const TestimonialSection = () => {
                 {
                     testimonials.map((testimonial) => (
                         <SwiperSlide key={testimonial.id} className='h-full md:py-6 py-4'>
-                            <div className='bg-white p-4 rounded-lg border border-gray-100 h-full flex flex-col transition-colors duration-300 hover:bg-red-50'>
+                            <div className='bg-white p-4 rounded-lg border border-gray-100 h-90 flex flex-col transition-colors duration-300 hover:bg-red-50'>
                                 {/* Star Rating */}
                                 <div className='flex mb-4 text-yellow-400'>
                                 {[...Array(5)].map((_, i) => (
@@ -120,7 +120,7 @@ const TestimonialSection = () => {
                                 </div>
                                 <p className='text-gray-600'>{testimonial.text}</p>
                                 {/* User Image */}
-                                <div className='w-20 h-20 rounded-full overflow-hidden mb-3 border-4 border-white shadow-sm mt-8'>
+                                <div className='w-20 h-20 rounded-full overflow-hidden mb-3 shadow-sm mt-8'>
                                 <img
                                     src={testimonial.image}
                                     alt={testimonial.name}

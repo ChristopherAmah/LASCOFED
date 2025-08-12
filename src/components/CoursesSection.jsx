@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CalendarDays, Clock3 } from 'lucide-react';
-import training from '../assets/training.jpg'; // Replace with your actual image path
+import management from '../assets/management.jpg'; // Replace with your actual image path
 import driver from '../assets/driver.jpg'; // Replace with your actual image path
 import { Link } from 'react-router-dom';
 
@@ -17,12 +17,12 @@ const courses = [
     category: 'Financial Literacy'
   },
   {
-    image: training,
-    title: 'Effective Cooperative Governance',
+    image: management,
+    title: 'Certificate in Cooperative management training',
     date: 'Apr 1, 2024',
-    duration: '7 Days',
-    authorName: 'John Okafor',
-    authorTitle: 'Co-op Specialist',
+    duration: '3 Months',
+    authorName: 'Lascofed Team',
+    // authorTitle: '#5000',
     description: 'Explore best practices in cooperative governance and enhance organizational decision-making.',
     category: 'Cooperative Management'
   },

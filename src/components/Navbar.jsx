@@ -20,7 +20,7 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Nav Links */}
-      <ul className="hidden md:flex space-x-4 text-sm font-sans">
+      <ul className="hidden md:flex space-x-8 text-sm font-sans">
         <li><NavLink to="/" className={navLinkClass}>HOME</NavLink></li>
         <li><NavLink to="/aboutus" className={navLinkClass}>ABOUT US</NavLink></li>
         <li><NavLink to="/portfolio" className={navLinkClass}>OUR PORTFOLIO</NavLink></li>
