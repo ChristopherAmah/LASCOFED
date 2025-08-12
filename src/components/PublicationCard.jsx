@@ -4,6 +4,12 @@ import pub2 from "../assets/pub2.jpg";
 import pub3 from "../assets/pub3.jpg";
 import pub4 from "../assets/pub4.jpg";
 
+// Import your PDF files. Make sure these files exist in your assets folder.
+import pdf1 from "../assets/sample.pdf";
+import pdf2 from "../assets/sample.pdf";
+import pdf3 from "../assets/sample.pdf";
+import pdf4 from "../assets/sample.pdf";
+
 // This is the main data for publications
 const publications = [
   {
@@ -13,6 +19,7 @@ const publications = [
     description:
       "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
     image: pub1,
+    pdfPath: pdf1, // Added PDF path
   },
   {
     year: "2023",
@@ -21,6 +28,7 @@ const publications = [
     description:
       "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
     image: pub2,
+    pdfPath: pdf2, // Added PDF path
   },
   {
     year: "2022",
@@ -29,6 +37,7 @@ const publications = [
     description:
       "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
     image: pub3,
+    pdfPath: pdf3, // Added PDF path
   },
   {
     year: "2021",
@@ -37,39 +46,7 @@ const publications = [
     description:
       "The conference focused on recovery strategies, digital adoption, and member welfare.",
     image: pub4,
-  },
-  // ... (rest of your publications data)
-  {
-    year: "2023",
-    category: "Cooperative Leaders' Conference",
-    title: "2023 Cooperative Leaders’ Conference",
-    description:
-      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
-    image: pub1,
-  },
-  {
-    year: "2023",
-    category: "Cooperative Festival",
-    title: "2023 Cooperative Festival",
-    description:
-      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
-    image: pub2,
-  },
-  {
-    year: "2022",
-    category: "Cooperative Leaders' Conference",
-    title: "2022 LASCOFED Leaders' Conference",
-    description:
-      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
-    image: pub3,
-  },
-  {
-    year: "2021",
-    category: "Cooperative Leaders' Conference",
-    title: "2021 LASCOFED Leaders' Conference",
-    description:
-      "The conference focused on recovery strategies, digital adoption, and member welfare.",
-    image: pub4,
+    pdfPath: pdf4, // Added PDF path
   },
   {
     year: "2023",
@@ -78,6 +55,7 @@ const publications = [
     description:
       "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
     image: pub1,
+    pdfPath: pdf1,
   },
   {
     year: "2023",
@@ -86,6 +64,7 @@ const publications = [
     description:
       "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
     image: pub2,
+    pdfPath: pdf2,
   },
   {
     year: "2022",
@@ -94,6 +73,7 @@ const publications = [
     description:
       "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
     image: pub3,
+    pdfPath: pdf3,
   },
   {
     year: "2021",
@@ -102,6 +82,7 @@ const publications = [
     description:
       "The conference focused on recovery strategies, digital adoption, and member welfare.",
     image: pub4,
+    pdfPath: pdf4,
   },
   {
     year: "2023",
@@ -110,6 +91,7 @@ const publications = [
     description:
       "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
     image: pub1,
+    pdfPath: pdf1,
   },
   {
     year: "2023",
@@ -118,6 +100,7 @@ const publications = [
     description:
       "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
     image: pub2,
+    pdfPath: pdf2,
   },
   {
     year: "2022",
@@ -126,6 +109,7 @@ const publications = [
     description:
       "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
     image: pub3,
+    pdfPath: pdf3,
   },
   {
     year: "2021",
@@ -134,6 +118,43 @@ const publications = [
     description:
       "The conference focused on recovery strategies, digital adoption, and member welfare.",
     image: pub4,
+    pdfPath: pdf4,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Leaders' Conference",
+    title: "2023 Cooperative Leaders’ Conference",
+    description:
+      "Led by Mr. Jeremiah Athanhode, the 2023 conference emphasized digital solutions, transparent reporting, and women's inclusion.",
+    image: pub1,
+    pdfPath: pdf1,
+  },
+  {
+    year: "2023",
+    category: "Cooperative Festival",
+    title: "2023 Cooperative Festival",
+    description:
+      "The festival gathered thousands of members in a colorful showcase of cooperative products and cultural displays.",
+    image: pub2,
+    pdfPath: pdf2,
+  },
+  {
+    year: "2022",
+    category: "Cooperative Leaders' Conference",
+    title: "2022 LASCOFED Leaders' Conference",
+    description:
+      "The event highlighted agricultural investment, youth inclusion, and cooperative sustainability.",
+    image: pub3,
+    pdfPath: pdf3,
+  },
+  {
+    year: "2021",
+    category: "Cooperative Leaders' Conference",
+    title: "2021 LASCOFED Leaders' Conference",
+    description:
+      "The conference focused on recovery strategies, digital adoption, and member welfare.",
+    image: pub4,
+    pdfPath: pdf4,
   },
 ];
 
@@ -254,14 +275,16 @@ function PublicationCard() {
                   className="w-full h-48 object-cover"
                 />
                 <span className="absolute top-2 left-2 bg-red-500 text-white text-[14px] px-3 py-1 rounded-[8px]">
-                  {pub.year} {/* Changed from 'All' to pub.year */}
+                  {pub.year}
                 </span>
               </div>
               <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-bold mb-2">{pub.title}</h3>
                 <p className="text-gray-600 mb-4 flex-grow">{pub.description}</p>
                 <a
-                  href="#"
+                  href={pub.pdfPath} // Use the new pdfPath here
+                  target="_blank" // Opens the PDF in a new tab
+                  rel="noopener noreferrer" // Recommended for security with target="_blank"
                   className="group flex items-center text-red-600 text-sm font-semibold hover:text-red-900 mt-auto"
                 >
                   Read More{" "}

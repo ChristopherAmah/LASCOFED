@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { CalendarDays, Clock3 } from 'lucide-react';
 import training from '../assets/training.jpg'; // Replace with your actual image path
+import driver from '../assets/driver.jpg'; // Replace with your actual image path
 import { Link } from 'react-router-dom';
 
 // Sample data for the courses
 const courses = [
   {
-    image: training,
+    image: driver,
     title: 'Cooperative Drivers Training',
     date: 'Mar 15, 2024',
     duration: '12 Days',

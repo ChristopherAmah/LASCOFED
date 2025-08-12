@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { LuChevronRight, LuChevronLeft } from 'react-icons/lu';
-import uploadlogo from '../assets/uploadlogo.png';
+// We assume you have a router set up, like react-router-dom
+import { useNavigate } from 'react-router-dom';
 
-// The component now accepts formData, onNext, and onBack as props.
-const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
+// The original icons and image were causing a compile error.
+// We will use inline SVG for the chevron icons to make the component self-contained.
+// import { LuChevronRight, LuChevronLeft } from 'react-icons/lu';
+// import uploadlogo from '../assets/uploadlogo.png';
+
+// The component now accepts formData, and onNext.
+const PersonalInfoForm = ({ formData, onNext }) => {
   const [localFormData, setLocalFormData] = useState(formData);
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   // A single handleChange function for all inputs, selects, and files
   const handleChange = (e) => {
@@ -31,8 +37,8 @@ const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
     if (isFormValid()) {
       onNext(localFormData); // Pass the local state back to the parent
     } else {
-      // You could add some user feedback here, like a toast or a modal
-      alert('Please fill in all required fields.');
+      // Using console.error instead of alert to avoid blocking the UI
+      console.error('Please fill in all required fields.');
     }
   };
 
@@ -77,9 +83,34 @@ const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
     </div>
   );
 
+  // Inline SVG for Chevron Left Icon
+  const ChevronLeft = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 mr-1"><path d="m15 18-6-6 6-6"/></svg>
+  );
+
+  // Inline SVG for Chevron Right Icon
+  const ChevronRight = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 -mr-1 h-5 w-5"><path d="m9 18 6-6-6-6"/></svg>
+  );
+
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white rounded-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal & Contact Information</h2>
+      {/* New Back Arrow button added here */}
+        <button
+          type="button"
+          onClick={() => navigate('/training')}
+          className="flex items-center text-red-600 font-semibold hover:text-red-800 transition-colors"
+        >
+          <ChevronLeft />
+          Back to Trainings
+        </button>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">
+          Personal & Contact Information
+        </h2>
+        <div>{/* Placeholder for alignment */}</div>
+      </div>
+
       <div className="md:px-5">
         <h3 className="text-lg font-semibold text-gray-800">Basic Details</h3>
 
@@ -127,9 +158,10 @@ const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
         {/* Upload Passport */}
         <div>
           <div className="w-full mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 px-4 md:px-20 text-center flex flex-col items-center justify-center">
-            <img src={uploadlogo} alt="" />
+            {/* The image import was removed to fix the error. You can replace this with a local image once your project is set up. */}
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#D8DAEB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
             <label htmlFor="passport" className="text-sm font-medium">
-              Upload photocopies of result(s) or certificate (s)  <br />
+              Upload photocopies of result(s) or certificate (s)  <br />
               <span className='text-[12px]' style={{ color: '#7D7D7D' }}>
                 JPEG, PNG, and PDF formats, up to 50MB
               </span>
@@ -141,11 +173,11 @@ const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
               accept="image/*"
               onChange={handleChange}
               required
-              className="text-sm text-gray-500 
-                file:mr-4 file:py-2 file:px-4 
-                file:rounded-md file:border-0 
-                file:text-sm file:font-semibold 
-                file:bg-red-50 file:text-red-700 
+              className="text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-red-50 file:text-red-700
                 hover:file:bg-red-100"
             />
           </div>
@@ -154,15 +186,14 @@ const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
 
       {/* Navigation Buttons + Help Link */}
       <div className="mt-8 flex items-center justify-between md:px-10">
+        {/* We keep this button to handle multi-step form logic */}
         <button
           type="button"
-          onClick={onBack}
-          disabled={!showBack}
-          className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm ${
-            showBack ? 'bg-gray-600 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-          }`}
+          onClick={() => navigate(-1)} // Use navigate(-1) to go back one step in history
+          disabled={false} // This button is always enabled to go back
+          className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm bg-gray-600 text-white hover:bg-gray-700`}
         >
-          <LuChevronLeft className="mr-2 h-5 w-5" />
+          <ChevronLeft />
           Back
         </button>
         <button
@@ -173,7 +204,7 @@ const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
           }`}
         >
           Next
-          <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />
+          <ChevronRight />
         </button>
       </div>
 

@@ -9,6 +9,7 @@ import vppppp from '../assets/vppppp.png';
 import vpppppp from '../assets/vpppppp.png';
 import wic from '../assets/wic.png';
 import treasurer from '../assets/treasurer.png';
+import executive from '../assets/executive.png';
 
 // Define the management committee members data.
 const committeeMembers = {
@@ -61,7 +62,7 @@ const committeeMembers = {
     {
       name: "Mrs. Ebun Akin-Falaiye",
       position: "Executive Secretary",
-      image: "https://placehold.co/200x250/E9E6E6/252525?text=Executive+Secretary",
+      image: executive,
     },
   ],
 };
