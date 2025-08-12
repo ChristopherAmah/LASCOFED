@@ -46,7 +46,7 @@ const SponsorInformationForm = ({ onNext, onBack, showBack }) => {
   return (
     <div>
       {/* Sponsor Details Section */}
-      <div className="bg-white shadow rounded-lg p-6 mb-8">
+      <div className="bg-white rounded-lg mb-8">
         <h2 className="text-lg font-semibold mb-6">Sponsor Details</h2>
         
         {/* Grid for name inputs, responsive layout */}

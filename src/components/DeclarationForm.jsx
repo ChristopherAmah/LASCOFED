@@ -91,7 +91,7 @@ const DeclarationForm = ({ onNext, onBack, showBack }) => {
         </div>
 
         {/* Upload Signature Section */}
-        <div className="mt-6 px-2 sm:px-12">
+        <div className="mt-6">
                   <div className="w-full border border-dashed border-[#D8DAEB] rounded-[12px] py-10 px-4 sm:px-10 text-center flex flex-col items-center justify-center gap-4">
                     <img src={uploadlogo} alt="Upload" className="w-16 h-16" />
                     <label className="text-sm font-medium text-gray-700">

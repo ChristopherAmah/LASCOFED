@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import {
   LuChevronRight,
@@ -12,15 +12,15 @@ import {
 } from 'react-icons/lu';
 import uploadlogo from '../assets/uploadlogo.png';
 
+// Generates a list of years for the dropdowns
 const generateYears = () => {
   const currentYear = new Date().getFullYear();
   return Array.from({ length: 50 }, (_, i) => currentYear - i);
 };
 
-const EducationInfoForm = ({ onNext, onBack, showBack }) => {
+const EducationInfoForm = ({ formData, onNext, onBack, showBack }) => {
   const years = generateYears();
 
-  // Default rows
   const defaultAcademic = [
     { institution: "", certificate: "", year: "", area: "" },
     { institution: "", certificate: "", year: "", area: "" },
@@ -37,21 +37,20 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
     { society: "", date: "", description: "" },
   ];
 
-  const [academicHistory, setAcademicHistory] = useState(defaultAcademic);
-  const [certifications, setCertifications] = useState(defaultCertifications);
-  const [seminars, setSeminars] = useState(defaultSeminars);
-  const [cooperativeWork, setCooperativeWork] = useState(defaultCooperative);
+  const [academicHistory, setAcademicHistory] = useState(formData.academicHistory || defaultAcademic);
+  const [certifications, setCertifications] = useState(formData.certifications || defaultCertifications);
+  const [seminars, setSeminars] = useState(formData.seminars || defaultSeminars);
+  const [cooperativeWork, setCooperativeWork] = useState(formData.cooperativeWork || defaultCooperative);
 
   const [academicEdit, setAcademicEdit] = useState(false);
   const [certEdit, setCertEdit] = useState(false);
   const [seminarEdit, setSeminarEdit] = useState(false);
   const [coopEdit, setCoopEdit] = useState(false);
 
-  // Store backup for cancel
-  const [backupAcademic, setBackupAcademic] = useState(defaultAcademic);
-  const [backupCert, setBackupCert] = useState(defaultCertifications);
-  const [backupSeminars, setBackupSeminars] = useState(defaultSeminars);
-  const [backupCoop, setBackupCoop] = useState(defaultCooperative);
+  const [backupAcademic, setBackupAcademic] = useState(formData.academicHistory || defaultAcademic);
+  const [backupCert, setBackupCert] = useState(formData.certifications || defaultCertifications);
+  const [backupSeminars, setBackupSeminars] = useState(formData.seminars || defaultSeminars);
+  const [backupCoop, setBackupCoop] = useState(formData.cooperativeWork || defaultCooperative);
 
   const handleChange = (section, index, field, value) => {
     if (section === "academic") {
@@ -89,6 +88,11 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
         ...seminars,
         { seminar: "", organizers: "", date: "" },
       ]);
+    } else if (section === "coop") {
+      setCooperativeWork([
+        ...cooperativeWork,
+        { society: "", date: "", description: "" },
+      ]);
     }
   };
 
@@ -99,28 +103,30 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
       setCertifications(certifications.filter((_, i) => i !== index));
     } else if (section === "seminars") {
       setSeminars(seminars.filter((_, i) => i !== index));
+    } else if (section === "coop") {
+      setCooperativeWork(cooperativeWork.filter((_, i) => i !== index));
     }
   };
 
   const handleEditToggle = (section, isEdit) => {
     if (section === "academic") {
       if (isEdit) {
-        setBackupAcademic(academicHistory);
+        setBackupAcademic([...academicHistory]);
       }
       setAcademicEdit(isEdit);
     } else if (section === "cert") {
       if (isEdit) {
-        setBackupCert(certifications);
+        setBackupCert([...certifications]);
       }
       setCertEdit(isEdit);
     } else if (section === "seminars") {
       if (isEdit) {
-        setBackupSeminars(seminars);
+        setBackupSeminars([...seminars]);
       }
       setSeminarEdit(isEdit);
     } else if (section === "coop") {
       if (isEdit) {
-        setBackupCoop(cooperativeWork);
+        setBackupCoop([...cooperativeWork]);
       }
       setCoopEdit(isEdit);
     }
@@ -177,8 +183,31 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
     }
   };
 
-  const renderInput = (label, value, onChange, type = "text", options) => (
-    <div className="w-full relative">
+  const isSectionValid = (sectionData) => {
+    return sectionData.some(item => Object.values(item).every(val => val && val !== ''));
+  };
+
+  const isFormValid = () => {
+    return isSectionValid(academicHistory);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isFormValid()) {
+      const allFormData = {
+        academicHistory,
+        certifications,
+        seminars,
+        cooperativeWork,
+      };
+      onNext(allFormData);
+    } else {
+      alert('Please fill in at least one row of Academic History.');
+    }
+  };
+
+  const renderInput = (label, value, onChange, type = "text", options, className = "") => (
+    <div className={`w-full relative ${className}`}>
       <label className="absolute font-semibold text-sm text-gray-600 bg-white px-1 ml-2 -top-2.5 left-2 z-10">
         {label}
       </label>
@@ -199,8 +228,8 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          rows="4"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+          rows="5"
+          className="w-full px-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
         ></textarea>
       ) : (
         <input
@@ -214,55 +243,50 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
   );
 
   const renderSection = (title, section, data, editState) => (
-    <div className="bg-white shadow rounded-lg p-6 mb-8">
-      {/* Header */}
+    <div className="bg-white rounded-lg mb-8">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">{title}</h2>
-        {section !== "coop" && (
-          !editState ? (
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleAddRow(section)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700"
-              >
-                <LuCirclePlus className="mr-2 h-4 w-4" /> Add
-              </button>
-              <button
-                onClick={() => handleEditToggle(section, true)}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
-                <LuPencil className="mr-2 h-4 w-4" /> Edit
-              </button>
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleDeleteRow(section, index)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-500 hover:bg-red-600">
-                <LuTrash2 className="mr-2 h-4 w-4" /> Delete
-              </button>
-              <button
-                onClick={() => handleSave(section)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
-                <LuSave className="mr-2 h-4 w-4" /> Save
-              </button>
-              <button
-                onClick={() => handleCancel(section)}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
-                <LuX className="mr-2 h-4 w-4" /> Cancel
-              </button>
-            </div>
-          )
+        {!editState ? (
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => handleAddRow(section)}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700"
+            >
+              <LuCirclePlus className="mr-2 h-4 w-4" /> Add
+            </button>
+            <button
+              type="button"
+              onClick={() => handleEditToggle(section, true)}
+              className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
+              <LuPencil className="mr-2 h-4 w-4" /> Edit
+            </button>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => handleSave(section)}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700">
+              <LuSave className="mr-2 h-4 w-4" /> Save
+            </button>
+            <button
+              type="button"
+              onClick={() => handleCancel(section)}
+              className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
+              <LuX className="mr-2 h-4 w-4" /> Cancel
+            </button>
+          </div>
         )}
       </div>
 
-      {/* List */}
       <DragDropContext onDragEnd={(result) => onDragEnd(result, section)}>
         <Droppable droppableId={section}>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {data.map((item, index) => (
                 <Draggable
-                  key={index}
+                  key={`${section}-${index}`}
                   draggableId={`${section}-${index}`}
                   index={index}
                   isDragDisabled={!editState}
@@ -271,16 +295,26 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      className={`grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-${
-                        section === "academic" ? "4" : section === "cert" || section === "seminars" ? "3" : "2"
-                      } auto-rows-fr gap-4 mb-4 p-4 mx-auto`}
+                      className={`grid grid-cols-1 md:grid-cols-2 ${
+                        section === "academic"
+                          ? "lg:grid-cols-4"
+                          : section === "cert" || section === "seminars"
+                            ? "lg:grid-cols-3"
+                            : "lg:grid-cols-[1fr_1fr]"
+                      } auto-rows-fr gap-4 mb-4 p-2 mx-auto rounded-lg`}
                     >
-                      {editState && section !== "coop" && (
-                        <div
-                          {...provided.dragHandleProps}
-                          className="col-span-full flex justify-end text-gray-500 cursor-grab mb-2"
-                        >
-                          <LuGripVertical />
+                      {editState && (
+                        <div className="col-span-full flex justify-end text-gray-500">
+                          <div {...provided.dragHandleProps} className="cursor-grab">
+                            <LuGripVertical className="h-5 w-5" />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteRow(section, index)}
+                            className="ml-2 text-red-500 hover:text-red-700"
+                          >
+                            <LuTrash2 className="h-5 w-5" />
+                          </button>
                         </div>
                       )}
 
@@ -345,12 +379,10 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
                             "Date",
                             item.date,
                             (val) => handleChange("seminars", index, "date", val),
-                            "select",
-                            years
+                            "date"
                           )}
                         </>
                       ) : (
-                        // Corrected "coop" section styling
                         <>
                           {renderInput(
                             "Name of Society",
@@ -360,16 +392,17 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
                           {renderInput(
                             "Date Employed/Joined",
                             item.date,
-                            (val) => handleChange("coop", index, "date", val)
+                            (val) => handleChange("coop", index, "date", val),
+                            "date"
                           )}
-                          <div className="col-span-full">
-                            {renderInput(
-                              "Job Description",
-                              item.description,
-                              (val) => handleChange("coop", index, "description", val),
-                              "textarea"
-                            )}
-                          </div>
+                          {renderInput(
+                            "Job Description",
+                            item.description,
+                            (val) => handleChange("coop", index, "description", val),
+                            "textarea",
+                            null,
+                            "col-span-full"
+                          )}
                         </>
                       )}
                     </div>
@@ -382,14 +415,13 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
         </Droppable>
       </DragDropContext>
 
-      {/* Upload Box (Conditional) */}
       {section !== "seminars" && section !== "coop" && (
-        <div className="mt-6 px-2 sm:px-12">
+        <div className="mt-6">
           <div className="w-full border border-dashed border-[#D8DAEB] rounded-[12px] py-10 px-4 sm:px-10 text-center flex flex-col items-center justify-center gap-4">
             <img src={uploadlogo} alt="Upload" className="w-16 h-16" />
             <label className="text-sm font-medium text-gray-700">
               <span>
-                Upload Supporting Documents (optional)
+                Upload photocopies of result(s) or certificate (s)
               </span>
               <br />
               <span className="text-[12px] text-gray-500">
@@ -413,7 +445,8 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
   );
 
   return (
-    <div>
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto rounded-md">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Educational Background</h2>
       {renderSection(
         "Academic History",
         "academic",
@@ -440,33 +473,35 @@ const EducationInfoForm = ({ onNext, onBack, showBack }) => {
       )}
 
       <div className="mt-8 flex items-center justify-between md:px-10">
-      <button
-        type="button"
-        onClick={onBack}
-        disabled={!showBack}
-        className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm ${
-          showBack
-            ? 'bg-gray-600 text-white hover:bg-gray-700'
-            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-        }`}
-      >
-        <LuChevronLeft className="mr-2 h-5 w-5" />
-        Back
-      </button>
-      <button
-        type="button"
-        onClick={onNext}
-        className="inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700"
-      >
-        Next
-        <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />
-      </button>
-    </div>
+        <button
+          type="button"
+          onClick={onBack}
+          disabled={!showBack}
+          className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm ${
+            showBack
+              ? 'bg-gray-600 text-white hover:bg-gray-700'
+              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          <LuChevronLeft className="mr-2 h-5 w-5" />
+          Back
+        </button>
+        <button
+          type="submit"
+          disabled={!isFormValid()}
+          className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ${
+            isFormValid() ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'
+          }`}
+        >
+          Next
+          <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />
+        </button>
+      </div>
 
-    <div className="text-center mt-4 text-gray-600 text-sm">
-      Stuck on the form? <a href="#" className="text-red-600 hover:underline">Let's call you!</a>
-    </div>
-    </div>
+      <div className="text-center mt-4 text-gray-600 text-sm">
+        Stuck on the form? <a href="#" className="text-red-600 hover:underline">Let's call you!</a>
+      </div>
+    </form>
   );
 };
 

@@ -1,234 +1,155 @@
-// PersonalInfoForm.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { LuChevronRight, LuChevronLeft } from 'react-icons/lu';
 import uploadlogo from '../assets/uploadlogo.png';
 
-const PersonalInfoForm = ({ onNext, showBack, onBack }) => {
+// The component now accepts formData, onNext, and onBack as props.
+const PersonalInfoForm = ({ formData, onNext, onBack, showBack }) => {
+  const [localFormData, setLocalFormData] = useState(formData);
+
+  // A single handleChange function for all inputs, selects, and files
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (files) {
+      setLocalFormData(prevData => ({ ...prevData, [name]: files[0] }));
+    } else {
+      setLocalFormData(prevData => ({ ...prevData, [name]: value }));
+    }
+  };
+
+  // Helper function to check if the form is valid
+  const isFormValid = () => {
+    const requiredFields = [
+      'firstName', 'lastName', 'dob', 'gender', 'cityOfBirth',
+      'stateOfBirth', 'nationality', 'maritalStatus', 'email',
+      'phone', 'permanentAddress', 'postalAddress', 'passport'
+    ];
+    return requiredFields.every(field => localFormData[field] && localFormData[field] !== '');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevents the default form submission
+    if (isFormValid()) {
+      onNext(localFormData); // Pass the local state back to the parent
+    } else {
+      // You could add some user feedback here, like a toast or a modal
+      alert('Please fill in all required fields.');
+    }
+  };
+
+  // A helper function to create a consistently styled input field
+  const renderInput = (id, label, type, placeholder, required = true) => (
+    <div className="relative">
+      <label htmlFor={id} className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
+        {label} {required && '*'}
+      </label>
+      <input
+        type={type}
+        id={id}
+        name={id}
+        placeholder={placeholder}
+        value={localFormData[id] || ''}
+        onChange={handleChange}
+        required={required}
+        className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+      />
+    </div>
+  );
+
+  // A helper function for the select dropdowns
+  const renderSelect = (id, label, options, required = true) => (
+    <div className="relative">
+      <label htmlFor={id} className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
+        {label} {required && '*'}
+      </label>
+      <select
+        id={id}
+        name={id}
+        value={localFormData[id] || ''}
+        onChange={handleChange}
+        required={required}
+        className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
+      >
+        <option value="">Select</option>
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    </div>
+  );
+
   return (
-    <form className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white rounded-md">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal & Contact Information</h2>
       <div className="md:px-5">
         <h3 className="text-lg font-semibold text-gray-800">Basic Details</h3>
 
-      {/* First row: First, Middle, Last Name */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-        {/* First Name */}
-        <div className="relative">
-          <label htmlFor="firstName" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            First Name *
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            placeholder="John"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
+        {/* First row: First, Middle, Last Name */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          {renderInput("firstName", "First Name", "text", "John")}
+          {renderInput("middleName", "Middle Name", "text", "Isaac", false)}
+          {renderInput("lastName", "Last Name", "text", "Doe")}
         </div>
 
-        {/* Middle Name */}
-        <div className="relative">
-          <label htmlFor="middleName" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Middle Name *
-          </label>
-          <input
-            type="text"
-            id="middleName"
-            placeholder="Isaac"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
+        {/* 2-column layout starts here */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          {renderInput("dob", "Date of Birth", "date", "_/_/__")}
+          {renderSelect("gender", "Gender", [
+            { value: "male", label: "Male" },
+            { value: "female", label: "Female" },
+            { value: "other", label: "Other" },
+          ])}
+          {renderInput("cityOfBirth", "City of Birth", "text", "Ikeja")}
+          {renderInput("stateOfBirth", "State of Birth", "text", "Lagos State")}
+          {renderInput("nationality", "Nationality", "text", "Nigerian")}
+          {renderSelect("maritalStatus", "Marital Status", [
+            { value: "single", label: "Single" },
+            { value: "married", label: "Married" },
+            { value: "divorced", label: "Divorced" },
+            { value: "widowed", label: "Widowed" },
+          ])}
         </div>
-
-        {/* Last Name */}
-        <div className="relative">
-          <label htmlFor="lastName" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Last Name *
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            placeholder="Doe"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-      </div>
-
-      {/* 2-column layout starts here */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        {/* Date of Birth */}
-        <div className="relative">
-          <label htmlFor="dob" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Date of Birth *
-          </label>
-          <input
-            type="date"
-            id="dob"
-            placeholder='_/_/__'
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Gender */}
-        <div className="relative">
-          <label htmlFor="gender" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Gender *
-          </label>
-          <select
-            id="gender"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-
-
-        {/* City of Birth */}
-        <div className="relative">
-          <label htmlFor="cityOfBirth" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            City of Birth *
-          </label>
-          <input
-            type="text"
-            id="cityOfBirth"
-            placeholder="Ikeja"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* State of Birth */}
-        <div className="relative">
-          <label htmlFor="stateOfBirth" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            State of Birth *
-          </label>
-          <input
-            type="text"
-            id="stateOfBirth"
-            placeholder="Lagos State"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Nationality */}
-        <div className="relative">
-          <label htmlFor="nationality" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Nationality *
-          </label>
-          <input
-            type="text"
-            id="nationality"
-            placeholder="Nigerian"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-
-        {/* Marital Status */}
-        <div className="relative">
-          <label htmlFor="maritalStatus" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Marital Status *
-          </label>
-          <select
-            id="maritalStatus"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="">Select</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
-            <option value="widowed">Widowed</option>
-          </select>
-        </div>
-      </div>
       </div>
 
       <div className='md:px-5'>
         {/* ========== Contact Details ========== */}
-      <h3 className="text-lg font-semibold text-gray-800 mt-10">Contact Details</h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-        {/* Email Address */}
-        <div className="relative">
-          <label htmlFor="email" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Email Address *
-          </label>
-          <input
-            type="email"
-            id="email"
-            placeholder="john@example.com"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
+        <h3 className="text-lg font-semibold text-gray-800 mt-10">Contact Details</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          {renderInput("email", "Email Address", "email", "john@example.com")}
+          {renderInput("phone", "Phone Number", "tel", "+1234567890")}
+        </div>
+        <div className='gap-6 mt-4'>
+          {renderInput("permanentAddress", "Permanent Address", "text", "1234 Main St, City, State")}
+        </div>
+        <div className='gap-6 mt-4'>
+          {renderInput("postalAddress", "Postal Address", "text", "P.O. Box 5678, City, State")}
         </div>
 
-        {/* Phone Number */}
-        <div className="relative">
-          <label htmlFor="phone" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-            Phone Number *
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            placeholder="+1234567890"
-            className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-          />
-        </div>
-      </div>
-
-      {/* Permanent Address */}
-      <div className="relative mt-6">
-        <label htmlFor="permanentAddress" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-          Permanent Address *
-        </label>
-        <input
-          type="text"
-          id="permanentAddress"
-          placeholder="1234 Main St, City, State"
-          className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
-      </div>
-
-      {/* Postal Address */}
-      <div className="relative mt-6">
-        <label htmlFor="postalAddress" className="absolute font-bold text-sm text-gray-600 bg-white px-1 ml-3 -top-2.5 left-2 z-10">
-          Postal Address *
-        </label>
-        <input
-          type="text"
-          id="postalAddress"
-          placeholder="P.O. Box 5678, City, State"
-          className="pt-5 pb-2 px-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-        />
-      </div>
-
-      {/* Upload Passport */}
-      <div className='md:px-12'>
-        <div className="w-full mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 px-4 md:px-20 text-center flex flex-col items-center justify-center gap-4">
-          
-          <img src={uploadlogo} alt="" />
-
-          <label htmlFor="passport" className="text-sm font-medium">
-            Upload Your Passport * <br />
-            <span className='text-[12px]' style={{ color: '#7D7D7D' }}>
-              JPEG, PNG, and PDF formats, up to 50MB
-            </span>
-          </label>
-
-          <input
-            type="file"
-            id="passport"
-            accept="image/*"
-            className="text-sm text-gray-500 
+        {/* Upload Passport */}
+        <div>
+          <div className="w-full mt-6 border border-dashed border-[#D8DAEB] rounded-[12.92px] py-20 px-4 md:px-20 text-center flex flex-col items-center justify-center">
+            <img src={uploadlogo} alt="" />
+            <label htmlFor="passport" className="text-sm font-medium">
+              Upload photocopies of result(s) or certificate (s)  <br />
+              <span className='text-[12px]' style={{ color: '#7D7D7D' }}>
+                JPEG, PNG, and PDF formats, up to 50MB
+              </span>
+            </label>
+            <input
+              type="file"
+              id="passport"
+              name="passport"
+              accept="image/*"
+              onChange={handleChange}
+              required
+              className="text-sm text-gray-500 
                 file:mr-4 file:py-2 file:px-4 
                 file:rounded-md file:border-0 
                 file:text-sm file:font-semibold 
                 file:bg-red-50 file:text-red-700 
                 hover:file:bg-red-100"
             />
-
+          </div>
         </div>
-      </div>
-
-
       </div>
 
       {/* Navigation Buttons + Help Link */}
@@ -245,9 +166,11 @@ const PersonalInfoForm = ({ onNext, showBack, onBack }) => {
           Back
         </button>
         <button
-          type="button"
-          onClick={onNext}
-          className="inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          type="submit"
+          disabled={!isFormValid()}
+          className={`inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 ${
+            isFormValid() ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-400 cursor-not-allowed'
+          }`}
         >
           Next
           <LuChevronRight className="ml-2 -mr-1 h-5 w-5" />

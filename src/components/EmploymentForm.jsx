@@ -21,6 +21,13 @@ const EmploymentMotivationForm = ({ onNext, onBack, showBack }) => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
+  // Handle form submission and pass data to the parent component
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevents the default form submission behavior (page refresh)
+    // You can add validation logic here before calling onNext
+    onNext(formData); // Now passing the form data to the onNext function
+  };
+
   // Generic input renderer to maintain consistent styling
   const renderInput = (label, name, value, type = "text", placeholder, required = true) => (
     <div className="w-full relative">
@@ -66,9 +73,9 @@ const EmploymentMotivationForm = ({ onNext, onBack, showBack }) => {
   );
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       {/* Current Employment Section */}
-      <div className="bg-white shadow rounded-lg p-6 mb-8">
+      <div className="bg-white rounded-lg mb-8">
         <h2 className="text-lg font-semibold mb-6">Current Employment</h2>
         
         {/* Grid for employment inputs, responsive layout */}
@@ -81,7 +88,7 @@ const EmploymentMotivationForm = ({ onNext, onBack, showBack }) => {
       </div>
 
       {/* Motivation Section */}
-      <div className="bg-white shadow rounded-lg p-6 mb-8">
+      <div className="bg-white rounded-lg mb-8">
         <h2 className="text-lg font-semibold mb-6">Motivation</h2>
         
         {/* Textarea for reason for taking the course */}
@@ -104,8 +111,7 @@ const EmploymentMotivationForm = ({ onNext, onBack, showBack }) => {
           Back
         </button>
         <button
-          type="button"
-          onClick={onNext}
+          type="submit" // Changed from 'button' to 'submit' to trigger form validation
           className="inline-flex items-center md:px-20 px-4 py-2 text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700"
         >
           Next
@@ -117,7 +123,7 @@ const EmploymentMotivationForm = ({ onNext, onBack, showBack }) => {
       <div className="text-center mt-4 text-gray-600 text-sm">
         Stuck on the form? <a href="#" className="text-red-600 hover:underline">Let's call you!</a>
       </div>
-    </div>
+    </form>
   );
 };
 
