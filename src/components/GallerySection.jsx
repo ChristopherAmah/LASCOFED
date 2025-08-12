@@ -25,8 +25,8 @@ const galleryData = [
   { title: "2022 LASCOFED Leaders Con", year: "2022", images: coop22Images },
   { title: "2023 Cooperative Leaders Con", year: "2023", images: coop23Images },
   { title: "Cooperative Festival 2023", year: "2023", images: coopFest2023Images },
-  { title: "LASCOFED Agricultural Produce", year: "2024", images: agricImages },
   { title: "2024 Cooperative Leaders Con", year: "2024", images: coop24Images },
+  { title: "LASCOFED Agricultural Produce", year: "2024", images: agricImages },
   { title: "Visit to Lagos State House of Assembly", year: "2024", images: assemblyImages },
 ];
 
@@ -36,7 +36,7 @@ const AlbumModal = ({ title, images, onClose }) => (
     <div className="bg-white rounded-lg max-w-5xl w-full h-full md:h-5/6 flex flex-col relative">
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 bg-red-600 text-white rounded-full p-2"
+        className="absolute top-4 right-4 bg-red-600 text-white rounded-full py-3 px-4"
       >
         ✕
       </button>
@@ -71,7 +71,7 @@ const GallerySection = () => {
       : galleryData.filter((item) => item.year === selectedYear);
 
   return (
-    <section className="bg-white py-12 px-4 max-w-7xl mx-auto font-sans">
+    <section className="bg-white py-12 px-4 lg:px-40 max-w-7xl mx-auto font-sans">
       <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-12">
         LASCOFED Through The Years
       </h2>
@@ -93,8 +93,8 @@ const GallerySection = () => {
         ))}
       </div>
 
-      {/* Gallery (Centered Grid) */}
-      <div className="flex flex-wrap justify-center gap-6">
+      {/* 3-column grid with titles always visible */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {filteredData.map((item, idx) => (
           <div
             key={idx}
@@ -102,17 +102,17 @@ const GallerySection = () => {
               setSelectedAlbum(item);
               setShowModal(true);
             }}
-            className="group relative overflow-hidden rounded-xl shadow-lg cursor-pointer w-[250px]"
+            className="relative overflow-hidden rounded-xl shadow-lg cursor-pointer"
           >
             {/* First image preview */}
             <img
               src={item.images[0]}
               alt={item.title}
-              className="w-full h-auto rounded-xl transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-64 object-cover"
             />
 
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {/* Always-visible title overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
               <div className="p-4">
                 <h3 className="text-white font-bold">{item.title}</h3>
                 <p className="text-white text-sm">{item.images.length} photos</p>
