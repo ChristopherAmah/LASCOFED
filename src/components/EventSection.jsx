@@ -6,46 +6,70 @@ import event1 from '../assets/event1.png';
 import ev2 from '../assets/ev2.png'; 
 import ev3 from '../assets/ev3.png'; 
 import ev4 from '../assets/ev4.png'; 
+import a from '../assets/VisitToAssembly/a.JPG';
+import coop21a from '../assets/CoopConf21/coop21a.JPG';
+import coop22a from '../assets/CoopConf22/coop22a.JPG';
+import coop24a from '../assets/CoopConf24/coop24a.JPG';
+import coopconf23a from '../assets/CoopConf23/coopconf23a.jpg';
+import coop from '../assets/CooperativeFestival2023/a.JPG';
+import agrica from '../assets/LascofedAgric/agrica.JPG';
+
 
 const events = [
   {
     id: 1,
-    name: 'Annual General Meeting',
-    date: '24 October, 2024',
-    location: 'Lagos',
-    image: event1,
+    name: '2021 LASCOFED Leaders Con',
+    date: '24 October, 2021',
+    // location: 'Lagos',
+    image: coop21a,
     category: 'Trainings',
   },
   {
     id: 2,
-    name: 'Community Outreach Program',
-    date: '15 November, 2024',
-    location: 'Abuja',
-    image: ev2,
+    name: '2022 LASCOFED Leaders Con',
+    date: '15 November, 2022',
+    // location: 'Abuja',
+    image: coop22a,
     category: 'Trainings',
   },
   {
     id: 3,
-    name: 'Leadership Workshop',
-    date: '01 December, 2024',
-    location: 'Port Harcourt',
-    image: ev4,
+    name: '2023 Cooperative Leaders Con',
+    date: '01 December, 2023',
+    // location: 'Port Harcourt',
+    image: coopconf23a,
     category: 'Tours',
   },
   {
     id: 4,
-    name: 'Product Launch Event',
-    date: '10 January, 2025',
-    location: 'Kano',
-    image: ev3,
+    name: 'Cooperative Festival 2023',
+    date: '10 January, 2023',
+    // location: 'Kano',
+    image: coop,
     category: 'Tours',
   },
   {
     id: 5,
-    name: 'Innovation Summit',
-    date: '28 February, 2025',
-    location: 'Enugu',
-    image: ev4,
+    name: '2024 Cooperative Leaders Con',
+    date: '28 February, 2024',
+    // location: 'Enugu',
+    image: coop24a,
+    category: 'Seminars',
+  },
+  {
+    id: 6,
+    name: 'LASCOFED Agricultural Produce',
+    date: '28 February, 2024',
+    // location: 'Enugu',
+    image: agrica,
+    category: 'Seminars',
+  },
+  {
+    id: 7,
+    name: 'Visit to Lagos State House of Assembly',
+    date: '28 February, 2024',
+    // location: 'Enugu',
+    image: a,
     category: 'Seminars',
   },
 ];

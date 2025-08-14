@@ -1,7 +1,7 @@
 import React from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import { Navigation } from 'swiper/modules';
-import testimonial from '../assets/testimonial.jpg'; // Replace with your actual image path
+// import testimonial from '../assets/testimonial.jpg'; // Replace with your actual image path
 
 //Import Swiper styles
 import 'swiper/css'
@@ -18,7 +18,7 @@ const testimonials = [
     id: 1,
     name: 'Mrs. Adunni Oyewole',
     role: 'President, Evergreen Agro Cooperative Society',
-    image: testimonial,
+    image: 'https://placehold.co/80x80/cccccc/333333?text=AO', // Replace with your actual image path
     text: 'LASCOFED\'s training transformed our structure. We\'ve grown stronger and more organized',
     rating: 4, // Example rating
   },
@@ -26,7 +26,7 @@ const testimonials = [
     id: 2,
     name: 'Mr. Emeka Okoro',
     role: 'General Secretary, Creative Hands Youth Cooperative',
-    image: testimonial,
+    image: 'https://placehold.co/80x80/cccccc/333333?text=EO',
     text: 'With LASCOFED\'s support, we became fully compliant and more efficient.',
     rating: 5,
   },
@@ -34,31 +34,31 @@ const testimonials = [
     id: 3,
     name: 'Mrs. Bisi Adeniran',
     role: 'Vice President, Lagos Textile Cooperative Union',
-    image: testimonial,
+    image: 'https://placehold.co/80x80/cccccc/333333?text=BA',
     text: 'We got legal help, exposure, and mentorship. LASCOFED truly supports young co-ops',
     rating: 4,
   },
   {
     id: 4,
-    name: 'Sarah Johnson',
+    name: 'Mrs. Sarah Johnson',
     role: 'Member, Tech Innovators Co-op',
-    image: testimonial,
+    image: 'https://placehold.co/80x80/cccccc/333333?text=SJ',
     text: 'The customer service has been exceptional. They went above and beyond to help me solve my problems and were always available when I needed them.',
     rating: 5,
   },
   {
     id: 5,
-    name: 'Michael Chen',
+    name: 'Mr. Michael Okoro',
     role: 'Treasurer, Green Farmers Collective',
-    image: testimonial,
+    image: 'https://placehold.co/80x80/cccccc/333333?text=MO',
     text: 'I\'ve been using their services for over a year now and couldn\'t be happier. The platform is intuitive and the features are exactly what I needed for my business.',
     rating: 4,
   },
   {
     id: 6,
-    name: 'Emma Wilson',
+    name: 'Mrs. Grace Uche',
     role: 'Secretary, Artisans Guild',
-    image: testimonial,
+    image: 'https://placehold.co/80x80/cccccc/333333?text=GU',
     text: 'What impressed me most was how quickly they responded to my requests. The team is professional, knowledgeable, and truly cares about their customers\' success.',
     rating: 5,
   },

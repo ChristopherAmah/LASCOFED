@@ -14,7 +14,7 @@ const courses = [
     authorName: 'Sarah Adebayo',
     authorTitle: 'Financial Advisor',
     description: 'Learn essential driving skills for cooperative societies and enhance your driving capabilities.',
-    category: 'Financial Literacy'
+    category: 'Drivers Training'
   },
   {
     image: management,
@@ -128,10 +128,10 @@ const CoursesSection = () => {
 
   const categories = [
     'All',
-    'Financial Literacy',
+    'Drivers Training',
     'Cooperative Management',
-    'Leadership & Skills',
-    'ICT & Digital Tools'
+    // 'Leadership & Skills',
+    // 'ICT & Digital Tools'
   ];
 
   const filteredCourses =
